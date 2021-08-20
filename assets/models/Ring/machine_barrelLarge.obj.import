@@ -1,0 +1,19 @@
+[remap]
+
+importer="wavefront_obj"
+type="Mesh"
+path="res://.import/machine_barrelLarge.obj-58a07b1a8d6f094e35dbc3ca2e0e0cea.mesh"
+
+[deps]
+
+files=[ "res://.import/machine_barrelLarge.obj-58a07b1a8d6f094e35dbc3ca2e0e0cea.mesh" ]
+
+source_file="res://assets/models/Ring/machine_barrelLarge.obj"
+dest_files=[ "res://.import/machine_barrelLarge.obj-58a07b1a8d6f094e35dbc3ca2e0e0cea.mesh", "res://.import/machine_barrelLarge.obj-58a07b1a8d6f094e35dbc3ca2e0e0cea.mesh" ]
+
+[params]
+
+generate_tangents=true
+scale_mesh=Vector3( 1, 1, 1 )
+offset_mesh=Vector3( 0, 0, 0 )
+optimize_mesh=true
