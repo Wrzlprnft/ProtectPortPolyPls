@@ -12,7 +12,6 @@ config_version=4
 
 config/name="RotaTD"
 run/main_scene="res://scenes/Main.tscn"
-config/icon="res://icon.png"
 
 [autoload]
 

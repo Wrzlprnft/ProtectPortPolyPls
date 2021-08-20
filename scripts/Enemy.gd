@@ -1,8 +1,8 @@
 extends KinematicBody
 
 
-export var velocity := 100
-
+export var velocity := 1
+var target := Vector3.ZERO
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
@@ -14,4 +14,9 @@ func _ready():
 #	pass
 
 func _physics_process(delta):
-	pass
+	var vec = -to_global(target).normalized()
+	look_at(target,Vector3.UP)
+	var collider = move_and_collide(vec* velocity/60.0)
+	
+	if collider:
+		translate(Vector3(11.0,0.0,0.0))
