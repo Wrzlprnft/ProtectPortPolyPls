@@ -138,17 +138,17 @@ margin_bottom = 96.0
 [node name="Button" type="Button" parent="CanvasLayer/NinePatchRect/VBoxContainer"]
 margin_top = 100.0
 margin_right = 163.0
-margin_bottom = 129.0
+margin_bottom = 133.0
 text = "Pause"
 
 [node name="Button3" type="Button" parent="CanvasLayer/NinePatchRect/VBoxContainer"]
-margin_top = 133.0
+margin_top = 137.0
 margin_right = 163.0
-margin_bottom = 162.0
+margin_bottom = 170.0
 text = "Restart"
 
 [node name="Button2" type="Button" parent="CanvasLayer/NinePatchRect/VBoxContainer"]
-margin_top = 166.0
+margin_top = 174.0
 margin_right = 163.0
-margin_bottom = 195.0
+margin_bottom = 207.0
 text = "Exit"
