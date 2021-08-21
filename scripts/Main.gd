@@ -6,11 +6,15 @@ var health := 10 setget set_health
 
 var time := 0.0
 
+var spawn_cooldown := 0.0
+
 var current_mount = null
 var current_ring_id = 0
 var tracked_mount = null
 var tracked_ring_id = 0
 var mount_tracking := false
+
+var paused := false
 
 var turret_scene = preload("res://scenes/Turret.tscn")
 var meteor_scene = preload("res://scenes/Enemy.tscn")
@@ -48,10 +52,6 @@ func _ready():
 	Events.connect("build_turret",self,"build_turret")
 	Events.connect("change_health",self,"change_health")
 	rng.randomize()
-	start_game()
-	while(true):
-		spawn_meteor()
-		yield(get_tree().create_timer(1), "timeout")
 
 func _input(event):
 	if event is InputEventMouseButton and current_mount and running:
@@ -68,6 +68,13 @@ func _process(delta):
 	if running:
 		time += delta
 		Events.emit_signal("update_time",time)
+		
+func _physics_process(delta):
+	if spawn_cooldown == 0:
+		spawn_meteor()
+		spawn_cooldown = 1*60
+	else:
+		spawn_cooldown -=1
 
 func build_turret(id) -> void:
 	var turret = turret_scene.instance()
@@ -90,13 +97,26 @@ func spawn_meteor() -> void:
 	$ViewportContainer/Viewport.add_child(meteor)
 	
 func start_game() -> void:
-	Events.emit_signal("start_game")
 	set_health(10)
 	time = 0.0
-	yield(Events,"game_started")
-	running = true
+	if not running:
+		Events.emit_signal("start_game")
+		yield(Events,"game_started")
+		running = true	
 	
 func end_game() -> void:
 	running = false
 	Events.emit_signal("game_ended")
 	
+
+
+func _on_Exit_pressed():
+	get_tree().notification(MainLoop.NOTIFICATION_WM_QUIT_REQUEST)
+
+
+func _on_Start_pressed():
+	if get_tree().paused:
+		get_tree().paused = false
+		$MenuBar/VBoxContainer/Pause.pressed = false
+	Events.emit_signal("game_reset")
+	start_game()

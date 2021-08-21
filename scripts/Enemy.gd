@@ -8,7 +8,7 @@ var health := 3
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
-	Events.connect("start_game",self,"game_reset")
+	Events.connect("game_reset",self,"game_reset")
 
 func game_reset():
 	get_parent().remove_child(self)

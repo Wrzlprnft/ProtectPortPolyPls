@@ -1,4 +1,4 @@
-[gd_scene load_steps=32 format=2]
+[gd_scene load_steps=33 format=2]
 
 [ext_resource path="res://scripts/Main.gd" type="Script" id=1]
 [ext_resource path="res://scenes/Laserbeam.tscn" type="PackedScene" id=2]
@@ -27,6 +27,7 @@
 [ext_resource path="res://assets/crosshair120.png" type="Texture" id=25]
 [ext_resource path="res://assets/ui/turret_double_SE.png" type="Texture" id=26]
 [ext_resource path="res://scripts/MenuBar.gd" type="Script" id=27]
+[ext_resource path="res://scripts/Pause.gd" type="Script" id=28]
 
 [sub_resource type="SphereShape" id=1]
 radius = 1.69884
@@ -337,18 +338,24 @@ margin_right = 307.0
 margin_bottom = 288.0
 
 [node name="Pause" type="Button" parent="MenuBar/VBoxContainer"]
+pause_mode = 2
 margin_top = 292.0
 margin_right = 307.0
 margin_bottom = 325.0
+disabled = true
+toggle_mode = true
 text = "Pause"
+script = ExtResource( 28 )
 
 [node name="Start" type="Button" parent="MenuBar/VBoxContainer"]
+pause_mode = 2
 margin_top = 329.0
 margin_right = 307.0
 margin_bottom = 362.0
-text = "Restart"
+text = "Start"
 
 [node name="Exit" type="Button" parent="MenuBar/VBoxContainer"]
+pause_mode = 2
 margin_top = 366.0
 margin_right = 307.0
 margin_bottom = 399.0
@@ -890,4 +897,7 @@ __meta__ = {
 [connection signal="pressed" from="MenuBar/VBoxContainer/Ring2Box/Ring2Right" to="MenuBar" method="_on_Ring2Right_pressed"]
 [connection signal="pressed" from="MenuBar/VBoxContainer/Ring3Box/Ring3Left" to="MenuBar" method="_on_Ring3Left_pressed"]
 [connection signal="pressed" from="MenuBar/VBoxContainer/Ring3Box/Ring3Right" to="MenuBar" method="_on_Ring3Right_pressed"]
+[connection signal="toggled" from="MenuBar/VBoxContainer/Pause" to="MenuBar/VBoxContainer/Pause" method="_on_Pause_toggled"]
+[connection signal="pressed" from="MenuBar/VBoxContainer/Start" to="." method="_on_Start_pressed"]
+[connection signal="pressed" from="MenuBar/VBoxContainer/Exit" to="." method="_on_Exit_pressed"]
 [connection signal="pressed" from="ViewportContainer/NinePatchRect/Button" to="ViewportContainer" method="_on_Button_pressed"]

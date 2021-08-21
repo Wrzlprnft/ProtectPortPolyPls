@@ -4,6 +4,7 @@ signal change_health(newHealth)
 
 signal start_game()
 signal game_started()
+signal game_reset()
 signal game_ended()
 
 signal mount_entered(mount,ring_id)

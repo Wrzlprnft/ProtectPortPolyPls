@@ -12,11 +12,20 @@ func _ready():
 	Events.connect("speed2_changed",self,"speed2_changed")
 	Events.connect("speed3_changed",self,"speed3_changed")
 	Events.connect("update_time",self,"update_time")
+	Events.connect("game_started",self,"start_game")
 
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 #func _process(delta):
 #	pass
+
+func start_game() -> void:
+	$VBoxContainer/Start.text = "Restart"
+	$VBoxContainer/Pause.disabled = false
+	
+func end_game() -> void:
+	$VBoxContainer/Pause.hide()
+	$VBoxContainer/Pause.disabled = true
 
 func update_time(value) -> void:
 	var time = "%.1f" % value	
