@@ -23,3 +23,5 @@ func _ready():
 # track health
 # track currency
 # turret construction
+#	-> active turret mount!
+#	-> building UI?

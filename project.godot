@@ -17,6 +17,11 @@ run/main_scene="res://scenes/Main.tscn"
 
 Events="*res://scripts/Events.gd"
 
+[display]
+
+window/size/width=1920
+window/size/height=1080
+
 [physics]
 
 common/enable_pause_aware_picking=true

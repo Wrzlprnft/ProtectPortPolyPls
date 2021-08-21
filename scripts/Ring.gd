@@ -16,3 +16,8 @@ func teleport_rings_up() -> void:
 
 func _physics_process(delta):
 	rotate_y(deg2rad(rot_degrees))
+	transform = transform.orthonormalized()
+
+
+func _on_Ring3_mouse_entered():
+	print("ring")
