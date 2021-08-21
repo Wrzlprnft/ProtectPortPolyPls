@@ -5,7 +5,7 @@
 [ext_resource path="res://scripts/TurretMount.gd" type="Script" id=3]
 
 [sub_resource type="CapsuleShape" id=1]
-radius = 0.33
+radius = 0.4
 
 [node name="RingSegment3" type="Spatial"]
 
@@ -15,6 +15,7 @@ transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 7.5, 0, 0 )
 [node name="TurretMount" type="StaticBody" parent="Spatial"]
 transform = Transform( 1.96157, 0, -0.390181, 0, 1.01, 0, 0.390181, 0, 1.96157, 0, 0, 1.5 )
 script = ExtResource( 3 )
+ring_id = 3
 
 [node name="machine_barrelLarge" type="MeshInstance" parent="Spatial/TurretMount"]
 transform = Transform( -1, 8.74228e-08, 0, -8.74228e-08, -1, 0, 0, 0, 1, 0, 0, 0 )
@@ -34,6 +35,9 @@ material/3 = null
 [node name="CollisionShape" type="CollisionShape" parent="Spatial/TurretMount"]
 transform = Transform( 1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 0, 0 )
 shape = SubResource( 1 )
+
+[node name="Position" type="Position3D" parent="Spatial/TurretMount"]
+transform = Transform( -1.49012e-08, 0, 1, 0, 1, 0, -1, 0, -1.49012e-08, 0, 0.5, 0 )
 
 [node name="MeshInstance" type="MeshInstance" parent="Spatial"]
 transform = Transform( 0.5, 0, 0, 0, 0.5, 0, 0, 0, 1, 0, 0, 0 )
@@ -64,3 +68,4 @@ material/8 = null
 material/9 = null
 
 [connection signal="mouse_entered" from="Spatial/TurretMount" to="Spatial/TurretMount" method="_on_TurretMount_mouse_entered"]
+[connection signal="mouse_exited" from="Spatial/TurretMount" to="Spatial/TurretMount" method="_on_TurretMount_mouse_exited"]

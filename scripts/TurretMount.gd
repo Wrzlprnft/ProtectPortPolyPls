@@ -1,9 +1,6 @@
 extends StaticBody
 
-
-# Declare member variables here. Examples:
-# var a = 2
-# var b = "text"
+export var ring_id = 1
 
 
 # Called when the node enters the scene tree for the first time.
@@ -17,4 +14,8 @@ func _ready():
 
 
 func _on_TurretMount_mouse_entered():
-	print("bloop")
+	Events.emit_signal("mount_entered",$Position,ring_id)
+
+
+func _on_TurretMount_mouse_exited():
+	Events.emit_signal("mount_exited",$Position)
