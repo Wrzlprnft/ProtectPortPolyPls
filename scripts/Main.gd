@@ -4,10 +4,14 @@ var running = false
 
 var health := 10 setget set_health
 var currency := 5 setget set_currency
+var difficulty := 1
+var difficulty_increase := 6
 
 var time := 0.0
 
-var spawn_cooldown := 0.0
+var cooldown := 0.0
+var start_cooldown := 160
+var spawn_cooldown := 160
 
 var current_mount = null
 var current_ring_id = 0
@@ -79,13 +83,17 @@ func _process(delta):
 	if running:
 		time += delta
 		Events.emit_signal("update_time",time)
+		if time > difficulty * 10.0:
+			difficulty += 1
+			spawn_cooldown = max(start_cooldown - difficulty * difficulty_increase,10)
+			difficulty_increase += 5
 		
 func _physics_process(delta):
-	if spawn_cooldown == 0:
+	if cooldown == 0:
 		spawn_meteor()
-		spawn_cooldown = 1*60
+		cooldown = spawn_cooldown
 	else:
-		spawn_cooldown -=1
+		cooldown -=1
 		
 func check_currency() -> void:
 	change_currency(0)
@@ -106,7 +114,7 @@ func spawn_meteor() -> void:
 	if not running:
 		return
 	var meteor = meteor_scene.instance()
-	var spawnpoint = Vector3(-10,0,0)
+	var spawnpoint = Vector3(-20,0,0)
 	spawnpoint = spawnpoint.rotated(Vector3.UP,rng.randf_range(0.0,2* PI))
 	meteor.translate(spawnpoint)
 	$ViewportContainer/Viewport.add_child(meteor)
@@ -115,6 +123,7 @@ func start_game() -> void:
 	set_health(10)
 	set_currency(5)
 	time = 0.0
+	spawn_cooldown = start_cooldown
 	if not running:
 		Events.emit_signal("start_game")
 		yield(Events,"game_started")

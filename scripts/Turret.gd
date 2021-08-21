@@ -34,7 +34,9 @@ func _process(delta):
 	look_at(Vector3(closest.to_global(Vector3.ZERO).x,to_global(Vector3.ZERO).y,closest.to_global(Vector3.ZERO).z),Vector3.UP)
 	if cooldown == 0:
 		var laserbeam = laser_scene.instance()
-		add_child(laserbeam)
+		get_parent().add_child(laserbeam)
+		laserbeam.translate_object_local(translation)
+		laserbeam.rotation = rotation
 		laserbeam.fire(self,closest)
 		cooldown = 1*60
 	else:
