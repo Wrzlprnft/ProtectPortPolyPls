@@ -4,6 +4,8 @@ func _ready():
 	Events.connect("mount_positon",self,"update_mount_position")
 	Events.connect("mount_selected",self,"show_turret_menu")
 	Events.connect("mount_deselected",self,"hide_turret_menu")
+	Events.connect("game_ended",self,"game_ends")
+	Events.connect("start_game",self,"start_game")
 	
 
 func _input( event ):
@@ -24,6 +26,15 @@ func show_turret_menu() -> void:
 func hide_turret_menu() -> void:
 	$Mount.hide()
 	$NinePatchRect.hide()
+
+func start_game() -> void:
+	$Viewport/Camera/AnimationPlayer.play("camera pan")
+	yield($Viewport/Camera/AnimationPlayer,"animation_finished")
+	Events.emit_signal("game_started")
+	
+func game_ends() -> void:
+	$Viewport/Camera/AnimationPlayer.play_backwards("camera pan")
+	hide_turret_menu()
 
 
 func _on_Button_pressed():

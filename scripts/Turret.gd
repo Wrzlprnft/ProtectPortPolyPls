@@ -10,8 +10,15 @@ var cooldown = 0
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
-	pass # Replace with function body.
+	Events.connect("start_game",self,"game_reset")
+	Events.connect("game_ended",self,"stop_firing")
+	
+func game_reset():
+	get_parent().remove_child(self)
+	queue_free()
 
+func stop_firing() -> void:
+	cooldown = -1
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):

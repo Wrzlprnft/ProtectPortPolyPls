@@ -8,17 +8,25 @@ var health := 3
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
-	pass # Replace with function body.
+	Events.connect("start_game",self,"game_reset")
 
+func game_reset():
+	get_parent().remove_child(self)
+	queue_free()
+	
 
-# Called every frame. 'delta' is the elapsed time since the previous frame.
-#func _process(delta):
-#	pass
+func damage(d: int) -> void:
+	health -= d
+	if health <= 0:
+		get_parent().remove_child(self)
+		queue_free()
 
 func _physics_process(delta):
 	var vec = -to_global(target).normalized()
 	look_at(target,Vector3.UP)
-	var collider = move_and_collide(vec* velocity/60.0)
+	var collision = move_and_collide(vec* velocity/60.0)
 	
-	if collider:
-		translate(Vector3(11.0,0.0,0.0))
+	if collision:
+		Events.emit_signal("change_health",-1)
+		get_parent().remove_child(self)
+		queue_free()
