@@ -24,7 +24,6 @@ var paused := false
 var turret_scene = preload("res://scenes/Turret.tscn")
 var meteor_scene = preload("res://scenes/Enemy.tscn")
 
-onready var rng = RandomNumberGenerator.new()
 
 func set_health (newHealth) -> void:
 	if newHealth == 0:
@@ -64,7 +63,7 @@ func _ready():
 	Events.connect("build_turret",self,"build_turret")
 	Events.connect("change_health",self,"change_health")
 	Events.connect("change_currency",self,"change_currency")
-	rng.randomize()
+	Events.rng.randomize()
 
 func _input(event):
 	if event is InputEventMouseButton and current_mount and running:
@@ -73,8 +72,6 @@ func _input(event):
 			tracked_ring_id = current_ring_id
 			mount_tracking = true
 			Events.emit_signal("mount_selected")
-	#if Input.is_key_pressed(KEY_SPACE):
-		#set_health(0)
 			
 func _process(delta):
 	if mount_tracking and tracked_mount:
@@ -86,7 +83,7 @@ func _process(delta):
 		if time > difficulty * 10.0:
 			difficulty += 1
 			spawn_cooldown = max(start_cooldown - difficulty * difficulty_increase,10)
-			difficulty_increase += 5
+			difficulty_increase += 1
 		
 func _physics_process(delta):
 	if cooldown == 0:
@@ -116,7 +113,7 @@ func spawn_meteor() -> void:
 		return
 	var meteor = meteor_scene.instance()
 	var spawnpoint = Vector3(-20,0,0)
-	spawnpoint = spawnpoint.rotated(Vector3.UP,rng.randf_range(0.0,2* PI))
+	spawnpoint = spawnpoint.rotated(Vector3.UP,Events.rng.randf_range(0.0,2* PI))
 	meteor.translate(spawnpoint)
 	$ViewportContainer/Viewport.add_child(meteor)
 	

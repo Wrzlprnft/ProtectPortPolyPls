@@ -12,14 +12,17 @@ func _ready():
 func fire(o,t) -> void:
 	origin = o
 	target = t
-	var s = Vector3(1.0,1.0,to_local(target.to_global(Vector3.ZERO)).length())
+	var tv = target.to_global(Vector3.ZERO)
+	#tv.y = to_global(Vector3.ZERO).y
+	var s = Vector3(1.0,1.0,to_local(tv).length())
 	$Sprite3D.scale_object_local(s)
 	$Sprite3D2.scale_object_local(s)
-	$Sprite3D.look_at(target.to_global(Vector3.ZERO),Vector3.UP)
-	$Sprite3D2.look_at(target.to_global(Vector3.ZERO),Vector3.UP)
+	$Sprite3D.look_at(tv,Vector3.UP)
+	$Sprite3D2.look_at(tv,Vector3.UP)
 	if t:
 		t.damage(1)
-	yield(get_tree().create_timer(0.2), "timeout")
+	$AnimationPlayer.play("fade")
+	yield($AnimationPlayer,"animation_finished")
 	get_parent().remove_child(self)
 	queue_free()
 	

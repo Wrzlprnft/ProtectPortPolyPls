@@ -30,11 +30,11 @@
 [ext_resource path="res://scripts/Pause.gd" type="Script" id=28]
 
 [sub_resource type="SphereShape" id=1]
-radius = 1.69884
+radius = 1.40213
 
 [sub_resource type="SphereShape" id=2]
 
-[sub_resource type="Animation" id=4]
+[sub_resource type="Animation" id=3]
 resource_name = "camera pan"
 length = 2.0
 tracks/0/type = "transform"
@@ -57,7 +57,7 @@ tracks/1/keys = {
 "values": [ 11.88, 23.1 ]
 }
 
-[sub_resource type="Environment" id=3]
+[sub_resource type="Environment" id=4]
 
 [node name="Main" type="Node"]
 script = ExtResource( 1 )
@@ -866,7 +866,7 @@ fov = 120.0
 size = 11.88
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="ViewportContainer/Viewport/Camera"]
-"anims/camera pan" = SubResource( 4 )
+"anims/camera pan" = SubResource( 3 )
 
 [node name="BakedLightmap" type="BakedLightmap" parent="ViewportContainer/Viewport"]
 extents = Vector3( 25, 19, 20 )
@@ -875,7 +875,7 @@ extents = Vector3( 25, 19, 20 )
 transform = Transform( 1, 0, 0, 0, 0.707107, 0.707107, 0, -0.707107, 0.707107, 0, 6, 16 )
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="ViewportContainer/Viewport"]
-environment = SubResource( 3 )
+environment = SubResource( 4 )
 
 [node name="Laserbeam" parent="ViewportContainer/Viewport" instance=ExtResource( 2 )]
 

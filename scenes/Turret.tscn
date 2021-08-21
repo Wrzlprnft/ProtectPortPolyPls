@@ -8,6 +8,8 @@ radius = 7.5
 height = 42.0
 
 [node name="Turret" type="Area"]
+collision_layer = 0
+collision_mask = 2
 script = ExtResource( 2 )
 
 [node name="CollisionShape" type="CollisionShape" parent="."]
