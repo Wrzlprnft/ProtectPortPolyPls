@@ -100,6 +100,7 @@ func check_currency() -> void:
 
 func build_turret(id) -> void:
 	change_currency(-5)
+	tracked_mount.get_parent().get_node("CollisionShape").disabled = true
 	var turret = turret_scene.instance()
 	var ring = $ViewportContainer/Viewport/Ring1
 	match tracked_ring_id:

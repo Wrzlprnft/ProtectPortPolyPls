@@ -111,8 +111,8 @@ margin_bottom = 24.0
 size_flags_horizontal = 3
 size_flags_stretch_ratio = 0.35
 bbcode_enabled = true
-bbcode_text = "[right]5[/right]"
-text = "10"
+bbcode_text = "[right]5 [/right]"
+text = "5 "
 fit_content_height = true
 scroll_active = false
 
@@ -142,7 +142,7 @@ size_flags_horizontal = 3
 size_flags_stretch_ratio = 0.35
 bbcode_enabled = true
 bbcode_text = "[right]0$[/right]"
-text = "5$"
+text = "0$"
 fit_content_height = true
 scroll_active = false
 
