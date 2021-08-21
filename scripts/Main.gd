@@ -3,6 +3,7 @@ extends Node
 var running = false
 
 var health := 10 setget set_health
+var currency := 5 setget set_currency
 
 var time := 0.0
 
@@ -27,10 +28,17 @@ func set_health (newHealth) -> void:
 		end_game()
 	elif health > 0:
 		health = newHealth
-	$MenuBar/VBoxContainer/Healthbox/Value.bbcode_text = "[right]" + str(health) + "[/right]"
+	$MenuBar/VBoxContainer/Healthbox/Value.bbcode_text = "[right]" + str(newHealth) + "[/right]"
 	
 func change_health(delta) -> void:
 	set_health(health + delta)
+	
+func set_currency(newValue):
+	currency = newValue
+	Events.emit_signal("currency_changed",currency)
+	
+func change_currency(delta):
+	set_currency(currency + delta)
 
 func set_current_mount(mount,ring_id) -> void:
 	current_mount = mount
@@ -51,6 +59,7 @@ func _ready():
 	Events.connect("mount_deselected",self,"clear_mount_tracking")
 	Events.connect("build_turret",self,"build_turret")
 	Events.connect("change_health",self,"change_health")
+	Events.connect("change_currency",self,"change_currency")
 	rng.randomize()
 
 func _input(event):
@@ -60,6 +69,8 @@ func _input(event):
 			tracked_ring_id = current_ring_id
 			mount_tracking = true
 			Events.emit_signal("mount_selected")
+	#if Input.is_key_pressed(KEY_SPACE):
+		#set_health(0)
 			
 func _process(delta):
 	if mount_tracking and tracked_mount:
@@ -75,8 +86,12 @@ func _physics_process(delta):
 		spawn_cooldown = 1*60
 	else:
 		spawn_cooldown -=1
+		
+func check_currency() -> void:
+	change_currency(0)
 
 func build_turret(id) -> void:
+	change_currency(-5)
 	var turret = turret_scene.instance()
 	var ring = $ViewportContainer/Viewport/Ring1
 	match tracked_ring_id:
@@ -98,6 +113,7 @@ func spawn_meteor() -> void:
 	
 func start_game() -> void:
 	set_health(10)
+	set_currency(5)
 	time = 0.0
 	if not running:
 		Events.emit_signal("start_game")

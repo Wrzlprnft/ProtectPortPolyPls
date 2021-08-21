@@ -18,6 +18,7 @@ func game_reset():
 func damage(d: int) -> void:
 	health -= d
 	if health <= 0:
+		Events.emit_signal("change_currency",1)
 		get_parent().remove_child(self)
 		queue_free()
 

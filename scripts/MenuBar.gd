@@ -13,6 +13,7 @@ func _ready():
 	Events.connect("speed3_changed",self,"speed3_changed")
 	Events.connect("update_time",self,"update_time")
 	Events.connect("game_started",self,"start_game")
+	Events.connect("currency_changed",self,"update_currency")
 
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
@@ -30,6 +31,9 @@ func end_game() -> void:
 func update_time(value) -> void:
 	var time = "%.1f" % value	
 	$VBoxContainer/Timebox/Value.bbcode_text = "[right]"+ time +"[/right]"
+	
+func update_currency(value) -> void:
+	$VBoxContainer/Creditbox/Value.bbcode_text = "[right]" + str(value) + "$[/right]"
 
 func speed1_changed(value) -> void:
 	$VBoxContainer/Ring1Box/RichTextLabel2.bbcode_text = "[center]"+str(value)+"[/center]"

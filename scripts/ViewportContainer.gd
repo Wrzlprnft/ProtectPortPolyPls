@@ -6,6 +6,7 @@ func _ready():
 	Events.connect("mount_deselected",self,"hide_turret_menu")
 	Events.connect("game_ended",self,"game_ends")
 	Events.connect("start_game",self,"start_game")
+	Events.connect("currency_changed",self,"update_currency")
 	
 
 func _input( event ):
@@ -35,7 +36,13 @@ func start_game() -> void:
 func game_ends() -> void:
 	$Viewport/Camera/AnimationPlayer.play_backwards("camera pan")
 	hide_turret_menu()
-
+	
+func update_currency(value) -> void:
+	if value < 5:
+		$NinePatchRect/Button.disabled = true
+	else:
+		$NinePatchRect/Button.disabled = false
+		
 
 func _on_Button_pressed():
 	Events.emit_signal("build_turret",-1)
