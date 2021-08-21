@@ -10,7 +10,7 @@ config_version=4
 
 [application]
 
-config/name="PortPoly"
+config/name="ProtectPortPolyPls"
 run/main_scene="res://scenes/Main.tscn"
 
 [autoload]

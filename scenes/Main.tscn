@@ -540,6 +540,7 @@ material/2 = null
 [node name="Ring1" type="KinematicBody" parent="ViewportContainer/Viewport"]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -10.5541, 0 )
 script = ExtResource( 5 )
+teleport_y = -3
 start_speed = 3
 
 [node name="CollisionShape" type="CollisionShape" parent="ViewportContainer/Viewport/Ring1"]
@@ -624,7 +625,7 @@ material/2 = null
 [node name="Ring2" type="KinematicBody" parent="ViewportContainer/Viewport"]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -6.8989, 0 )
 script = ExtResource( 5 )
-strut_dist = 5
+teleport_y = -7
 ring_id = 2
 
 [node name="CollisionShape" type="CollisionShape" parent="ViewportContainer/Viewport/Ring2"]
@@ -722,7 +723,7 @@ material/2 = null
 [node name="Ring3" type="KinematicBody" parent="ViewportContainer/Viewport"]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -3.04789, 0 )
 script = ExtResource( 5 )
-strut_dist = 10
+teleport_y = -11
 ring_id = 3
 start_speed = 5
 

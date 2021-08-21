@@ -1,6 +1,7 @@
 extends KinematicBody
 
-export var strut_dist := 0
+export var teleport_y := 0
+onready var original_y = translation.y
 export var ring_id := 1
 export var start_speed := 2
 
@@ -25,10 +26,12 @@ func change_speed(dir) -> void:
 	Events.emit_signal("speed"+str(ring_id)+"_changed", (speedlevel - 3) if (speedlevel < 3) else (speedlevel - 2)) 
 
 func teleport_rings_down() -> void:
-	$Struts.translate(Vector3.DOWN * strut_dist)
+	translation.y = teleport_y
 
 func teleport_rings_up() -> void:
-	$Struts.translate(Vector3.UP * strut_dist)
+	translation.y = original_y
+	
+	
 
 func _physics_process(delta):
 	rotate_y(deg2rad(speed_values[speedlevel]))
