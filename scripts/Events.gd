@@ -3,7 +3,7 @@ extends Node
 signal change_health(newHealth)
 
 signal change_currency(delta)
-signal currency_changed(newValue)
+signal currency_changed(newValue,ring_id)
 
 signal start_game()
 signal game_started()

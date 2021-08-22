@@ -33,7 +33,7 @@ func update_time(value) -> void:
 	var time = "%.1f" % value	
 	$VBoxContainer2/TabContainer/Buttons/VBoxContainer/Timebox/Value.bbcode_text = "[right]"+ time +"[/right]"
 	
-func update_currency(value) -> void:
+func update_currency(value,dummy) -> void:
 	$VBoxContainer2/TabContainer/Buttons/VBoxContainer/Creditbox/Value.bbcode_text = "[right]" + str(value) + "$[/right]"
 
 func speed1_changed(value) -> void:

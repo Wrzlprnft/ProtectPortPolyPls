@@ -37,11 +37,23 @@ func game_ends() -> void:
 	$Viewport/Camera/AnimationPlayer.play_backwards("camera pan")
 	hide_turret_menu()
 	
-func update_currency(value) -> void:
-	if value < 5:
-		$NinePatchRect/Button.disabled = true
-	else:
-		$NinePatchRect/Button.disabled = false
+func update_currency(value,ring_id) -> void:
+	match ring_id:
+		1:
+			if value < 12:
+				$NinePatchRect/Button.disabled = true
+			else:
+				$NinePatchRect/Button.disabled = false
+		2:
+			if value < 8:
+				$NinePatchRect/Button.disabled = true
+			else:
+				$NinePatchRect/Button.disabled = false
+		3:
+			if value < 5:
+				$NinePatchRect/Button.disabled = true
+			else:
+				$NinePatchRect/Button.disabled = false
 		
 
 func _on_Button_pressed():

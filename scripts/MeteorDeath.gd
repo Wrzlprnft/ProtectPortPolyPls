@@ -11,7 +11,6 @@ func _ready():
 	play()
 	yield(self,"finished")
 	get_parent().remove_child(self)
-	print("sound dead")
 	queue_free()
 
 

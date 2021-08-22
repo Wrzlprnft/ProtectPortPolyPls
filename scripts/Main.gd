@@ -38,7 +38,7 @@ func change_health(delta) -> void:
 	
 func set_currency(newValue):
 	currency = newValue
-	Events.emit_signal("currency_changed",currency)
+	Events.emit_signal("currency_changed",currency,tracked_ring_id)
 	
 func change_currency(delta):
 	set_currency(currency + delta)
@@ -83,6 +83,7 @@ func _input(event):
 func _process(delta):
 	if mount_tracking and tracked_mount:
 		var pos = tracked_mount.to_global(Vector3.ZERO)
+		Events.emit_signal("currency_changed",currency,tracked_ring_id)
 		Events.emit_signal("mount_positon",pos)
 	if running:
 		time += delta
