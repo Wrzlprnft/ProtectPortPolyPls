@@ -30,7 +30,7 @@
 [ext_resource path="res://scripts/Pause.gd" type="Script" id=28]
 [ext_resource path="res://assets/ui/metalPanel_plate.png" type="Texture" id=29]
 
-[sub_resource type="Animation" id=5]
+[sub_resource type="Animation" id=1]
 resource_name = "thing"
 length = 2.0
 loop = true
@@ -47,13 +47,12 @@ tracks/0/keys = {
 "values": [ 1.0, 0.99 ]
 }
 
-[sub_resource type="SphereShape" id=1]
+[sub_resource type="SphereShape" id=2]
 radius = 1.40213
 
-[sub_resource type="SphereShape" id=2]
+[sub_resource type="SphereShape" id=3]
 
-[sub_resource type="Animation" id=3]
-resource_name = "camera pan"
+[sub_resource type="Animation" id=4]
 length = 2.0
 tracks/0/type = "transform"
 tracks/0/path = NodePath(".")
@@ -75,7 +74,7 @@ tracks/1/keys = {
 "values": [ 11.88, 23.1 ]
 }
 
-[sub_resource type="Environment" id=4]
+[sub_resource type="Environment" id=5]
 
 [node name="Main" type="Node"]
 script = ExtResource( 1 )
@@ -139,7 +138,7 @@ __meta__ = {
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="MenuBar/VBoxContainer2/RichTextLabel"]
 autoplay = "thing"
-anims/thing = SubResource( 5 )
+anims/thing = SubResource( 1 )
 
 [node name="TabContainer" type="TabContainer" parent="MenuBar/VBoxContainer2"]
 margin_top = 52.0
@@ -179,7 +178,14 @@ manipulate  the  ring speed  to  influence  turret   position
 
 protect   the   station   from   asteroids
 
-... as   long   as   you   can!"
+... as   long   as   you   can!
+
+Turret   Cost: 5$
+Turret   Damage: 1
+
+Asteroid   Health: 3
+Asteroid Damage: 1
+Astroid  Reward: 1"
 __meta__ = {
 "_edit_use_anchors_": false
 }
@@ -202,6 +208,8 @@ margin_bottom = -10.0
 [node name="VBoxContainer" type="VBoxContainer" parent="MenuBar/VBoxContainer2/TabContainer/Buttons"]
 anchor_right = 1.0
 anchor_bottom = 1.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
 __meta__ = {
 "_edit_use_anchors_": false
 }
@@ -544,7 +552,7 @@ physics_object_picking = true
 transform = Transform( 1.5, 0, 0, 0, 1.5, 0, 0, 0, 1.5, 0, 0, 0 )
 
 [node name="CollisionShape" type="CollisionShape" parent="ViewportContainer/Viewport/Core"]
-shape = SubResource( 1 )
+shape = SubResource( 2 )
 
 [node name="MeshInstance" type="MeshInstance" parent="ViewportContainer/Viewport/Core"]
 mesh = ExtResource( 7 )
@@ -698,7 +706,7 @@ start_speed = 3
 
 [node name="CollisionShape" type="CollisionShape" parent="ViewportContainer/Viewport/Ring1"]
 visible = false
-shape = SubResource( 2 )
+shape = SubResource( 3 )
 
 [node name="Turret" type="KinematicBody" parent="ViewportContainer/Viewport/Ring1"]
 
@@ -783,7 +791,7 @@ ring_id = 2
 
 [node name="CollisionShape" type="CollisionShape" parent="ViewportContainer/Viewport/Ring2"]
 visible = false
-shape = SubResource( 2 )
+shape = SubResource( 3 )
 
 [node name="Segments" type="Spatial" parent="ViewportContainer/Viewport/Ring2"]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0.0108523, -0.00862694, -3.86238e-05 )
@@ -882,7 +890,7 @@ start_speed = 5
 
 [node name="CollisionShape" type="CollisionShape" parent="ViewportContainer/Viewport/Ring3"]
 visible = false
-shape = SubResource( 2 )
+shape = SubResource( 3 )
 
 [node name="Segments" type="Spatial" parent="ViewportContainer/Viewport/Ring3"]
 __meta__ = {
@@ -998,7 +1006,7 @@ fov = 120.0
 size = 11.88
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="ViewportContainer/Viewport/Camera"]
-"anims/camera pan" = SubResource( 3 )
+"anims/camera pan" = SubResource( 4 )
 
 [node name="BakedLightmap" type="BakedLightmap" parent="ViewportContainer/Viewport"]
 extents = Vector3( 25, 19, 20 )
@@ -1007,7 +1015,7 @@ extents = Vector3( 25, 19, 20 )
 transform = Transform( 1, 0, 0, 0, 0.707107, 0.707107, 0, -0.707107, 0.707107, 0, 6, 16 )
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="ViewportContainer/Viewport"]
-environment = SubResource( 4 )
+environment = SubResource( 5 )
 
 [node name="Laserbeam" parent="ViewportContainer/Viewport" instance=ExtResource( 2 )]
 

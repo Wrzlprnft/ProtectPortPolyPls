@@ -1,0 +1,13 @@
+[remap]
+
+importer="image"
+type="Image"
+path="res://.import/Station_topdown.png-ec142c2bb26efeca178836c6086eab21.image"
+
+[deps]
+
+source_file="res://assets/Station_topdown.png"
+dest_files=[ "res://.import/Station_topdown.png-ec142c2bb26efeca178836c6086eab21.image" ]
+
+[params]
+

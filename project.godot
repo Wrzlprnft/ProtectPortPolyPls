@@ -12,6 +12,8 @@ config_version=4
 
 config/name="ProtectPortPolyPls"
 run/main_scene="res://scenes/Main.tscn"
+config/icon="res://assets/Station_topdown.png"
+config/windows_native_icon="res://icon.ico"
 
 [autoload]
 
