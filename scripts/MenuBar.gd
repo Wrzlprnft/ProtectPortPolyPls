@@ -13,6 +13,7 @@ func _ready():
 	Events.connect("speed3_changed",self,"speed3_changed")
 	Events.connect("update_time",self,"update_time")
 	Events.connect("game_started",self,"start_game")
+	Events.connect("game_ended",self,"end_game")
 	Events.connect("currency_changed",self,"update_currency")
 
 
@@ -21,28 +22,28 @@ func _ready():
 #	pass
 
 func start_game() -> void:
-	$VBoxContainer/Start.text = "Restart"
-	$VBoxContainer/Pause.disabled = false
+	$VBoxContainer2/TabContainer/Buttons/VBoxContainer/Start.text = "Restart"
+	$VBoxContainer2/TabContainer/Buttons/VBoxContainer/Pause.disabled = false
+	$VBoxContainer2/RichTextLabel/AnimationPlayer.stop(true)
 	
 func end_game() -> void:
-	$VBoxContainer/Pause.hide()
-	$VBoxContainer/Pause.disabled = true
+	$VBoxContainer2/TabContainer/Buttons/VBoxContainer/Pause.disabled = true
 
 func update_time(value) -> void:
 	var time = "%.1f" % value	
-	$VBoxContainer/Timebox/Value.bbcode_text = "[right]"+ time +"[/right]"
+	$VBoxContainer2/TabContainer/Buttons/VBoxContainer/Timebox/Value.bbcode_text = "[right]"+ time +"[/right]"
 	
 func update_currency(value) -> void:
-	$VBoxContainer/Creditbox/Value.bbcode_text = "[right]" + str(value) + "$[/right]"
+	$VBoxContainer2/TabContainer/Buttons/VBoxContainer/Creditbox/Value.bbcode_text = "[right]" + str(value) + "$[/right]"
 
 func speed1_changed(value) -> void:
-	$VBoxContainer/Ring1Box/RichTextLabel2.bbcode_text = "[center]"+str(value)+"[/center]"
+	$VBoxContainer2/TabContainer/Buttons/VBoxContainer/Ring1Box/RichTextLabel2.bbcode_text = "[center]"+str(value)+"[/center]"
 
 func speed2_changed(value) -> void:
-	$VBoxContainer/Ring2Box/RichTextLabel2.bbcode_text = "[center]"+str(value)+"[/center]"
+	$VBoxContainer2/TabContainer/Buttons/VBoxContainer/Ring2Box/RichTextLabel2.bbcode_text = "[center]"+str(value)+"[/center]"
 
 func speed3_changed(value) -> void:
-	$VBoxContainer/Ring3Box/RichTextLabel2.bbcode_text = "[center]"+str(value)+"[/center]"
+	$VBoxContainer2/TabContainer/Buttons/VBoxContainer/Ring3Box/RichTextLabel2.bbcode_text = "[center]"+str(value)+"[/center]"
 
 func _on_Ring1Left_pressed():
 	Events.emit_signal("change_speed1",-1)
@@ -66,3 +67,11 @@ func _on_Ring3Left_pressed():
 
 func _on_Ring3Right_pressed():
 	Events.emit_signal("change_speed3",1)
+
+
+func _on_Game_pressed():
+	$VBoxContainer2/TabContainer.current_tab = 1
+
+
+func _on_Instructions_pressed():
+	$VBoxContainer2/TabContainer.current_tab = 0

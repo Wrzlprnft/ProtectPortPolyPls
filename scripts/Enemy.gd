@@ -15,7 +15,7 @@ func _ready():
 	var x = Events.rng.randf_range(0.8,1.2)
 	var y = Events.rng.randf_range(0.8,1.2)
 	var z = Events.rng.randf_range(0.8,1.2)
-	scale_object_local(Vector3(x,y,z))
+	$MeshInstance.scale_object_local(Vector3(x,y,z))
 	x = Events.rng.randf_range(0.1,1)
 	y = Events.rng.randf_range(0.1,1)
 	z = Events.rng.randf_range(0.1,1)
@@ -34,13 +34,18 @@ func die() -> void:
 
 func damage(d: int) -> void:
 	health -= d
+	$MeshInstance.scale_object_local(Vector3(0.8,0.8,0.8))
+	var particles = Events.meteor_particle_scene.instance()
+	get_parent().add_child(particles)
+	particles.translate(translation)
+	particles.scale_object_local(Vector3(0.5,0.5,0.5))
 	if health <= 0:
 		Events.emit_signal("change_currency",1)
 		die()
 
 func _physics_process(delta):
 	var vec = -to_global(target).normalized()
-	rotate(rot_angle,rot_speed)
+	$MeshInstance.rotate(rot_angle,rot_speed)
 	var collision = move_and_collide(vec* velocity/60.0)
 	
 	if collision:		

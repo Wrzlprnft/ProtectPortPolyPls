@@ -1,4 +1,4 @@
-[gd_scene load_steps=33 format=2]
+[gd_scene load_steps=35 format=2]
 
 [ext_resource path="res://scripts/Main.gd" type="Script" id=1]
 [ext_resource path="res://scenes/Laserbeam.tscn" type="PackedScene" id=2]
@@ -28,6 +28,24 @@
 [ext_resource path="res://assets/ui/turret_double_SE.png" type="Texture" id=26]
 [ext_resource path="res://scripts/MenuBar.gd" type="Script" id=27]
 [ext_resource path="res://scripts/Pause.gd" type="Script" id=28]
+[ext_resource path="res://assets/ui/metalPanel_plate.png" type="Texture" id=29]
+
+[sub_resource type="Animation" id=5]
+resource_name = "thing"
+length = 2.0
+loop = true
+tracks/0/type = "value"
+tracks/0/path = NodePath(".:percent_visible")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 1 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 1,
+"values": [ 1.0, 0.99 ]
+}
 
 [sub_resource type="SphereShape" id=1]
 radius = 1.40213
@@ -63,7 +81,7 @@ tracks/1/keys = {
 script = ExtResource( 1 )
 
 [node name="MenuBar" type="NinePatchRect" parent="."]
-anchor_left = 0.8
+anchor_left = 0.75
 anchor_right = 1.0
 anchor_bottom = 1.0
 theme = ExtResource( 6 )
@@ -78,25 +96,126 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="VBoxContainer" type="VBoxContainer" parent="MenuBar"]
+[node name="VBoxContainer2" type="VBoxContainer" parent="MenuBar"]
 anchor_left = 0.1
 anchor_top = 0.05
-anchor_right = 0.9
+anchor_right = 0.95
 anchor_bottom = 0.95
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="Healthbox" type="HBoxContainer" parent="MenuBar/VBoxContainer"]
-margin_right = 307.0
+[node name="RichTextLabel" type="RichTextLabel" parent="MenuBar/VBoxContainer2"]
+margin_right = 408.0
+margin_bottom = 48.0
+rect_clip_content = false
+size_flags_horizontal = 3
+custom_colors/default_color = Color( 0.643137, 0.643137, 0.643137, 1 )
+text = "~: Protect Port Poly
+~: PLS ?"
+fit_content_height = true
+scroll_active = false
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="NinePatchRect" type="NinePatchRect" parent="MenuBar/VBoxContainer2/RichTextLabel"]
+modulate = Color( 0.223529, 0.223529, 0.223529, 1 )
+show_behind_parent = true
+anchor_left = -0.01
+anchor_top = -0.01
+anchor_right = 1.01
+anchor_bottom = 1.01
+size_flags_horizontal = 3
+size_flags_vertical = 3
+texture = ExtResource( 29 )
+patch_margin_left = 7
+patch_margin_top = 7
+patch_margin_right = 7
+patch_margin_bottom = 7
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="MenuBar/VBoxContainer2/RichTextLabel"]
+autoplay = "thing"
+anims/thing = SubResource( 5 )
+
+[node name="TabContainer" type="TabContainer" parent="MenuBar/VBoxContainer2"]
+margin_top = 52.0
+margin_right = 408.0
+margin_bottom = 972.0
+size_flags_vertical = 3
+tab_align = 0
+tabs_visible = false
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Instructions" type="Tabs" parent="MenuBar/VBoxContainer2/TabContainer"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = 10.0
+margin_top = 10.0
+margin_right = -10.0
+margin_bottom = -10.0
+
+[node name="VBoxContainer" type="VBoxContainer" parent="MenuBar/VBoxContainer2/TabContainer/Instructions"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Label2" type="RichTextLabel" parent="MenuBar/VBoxContainer2/TabContainer/Instructions/VBoxContainer"]
+margin_right = 388.0
+margin_bottom = 863.0
+size_flags_vertical = 3
+text = "Instructions:
+
+Build   turrets   by  clicking  on   a   mount
+
+manipulate  the  ring speed  to  influence  turret   position
+
+protect   the   station   from   asteroids
+
+... as   long   as   you   can!"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Game" type="Button" parent="MenuBar/VBoxContainer2/TabContainer/Instructions/VBoxContainer"]
+margin_top = 867.0
+margin_right = 388.0
+margin_bottom = 900.0
+text = "Game"
+
+[node name="Buttons" type="Tabs" parent="MenuBar/VBoxContainer2/TabContainer"]
+visible = false
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = 10.0
+margin_top = 10.0
+margin_right = -10.0
+margin_bottom = -10.0
+
+[node name="VBoxContainer" type="VBoxContainer" parent="MenuBar/VBoxContainer2/TabContainer/Buttons"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Healthbox" type="HBoxContainer" parent="MenuBar/VBoxContainer2/TabContainer/Buttons/VBoxContainer"]
+margin_right = 388.0
 margin_bottom = 24.0
 size_flags_vertical = 8
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="Label" type="RichTextLabel" parent="MenuBar/VBoxContainer/Healthbox"]
-margin_right = 224.0
+[node name="Label" type="RichTextLabel" parent="MenuBar/VBoxContainer2/TabContainer/Buttons/VBoxContainer/Healthbox"]
+margin_right = 284.0
 margin_bottom = 24.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
@@ -104,29 +223,29 @@ text = "Health"
 fit_content_height = true
 scroll_active = false
 
-[node name="Value" type="RichTextLabel" parent="MenuBar/VBoxContainer/Healthbox"]
-margin_left = 228.0
-margin_right = 307.0
+[node name="Value" type="RichTextLabel" parent="MenuBar/VBoxContainer2/TabContainer/Buttons/VBoxContainer/Healthbox"]
+margin_left = 288.0
+margin_right = 388.0
 margin_bottom = 24.0
 size_flags_horizontal = 3
 size_flags_stretch_ratio = 0.35
 bbcode_enabled = true
-bbcode_text = "[right]5 [/right]"
-text = "5 "
+bbcode_text = "[right]10[/right]"
+text = "10"
 fit_content_height = true
 scroll_active = false
 
-[node name="Creditbox" type="HBoxContainer" parent="MenuBar/VBoxContainer"]
+[node name="Creditbox" type="HBoxContainer" parent="MenuBar/VBoxContainer2/TabContainer/Buttons/VBoxContainer"]
 margin_top = 28.0
-margin_right = 307.0
+margin_right = 388.0
 margin_bottom = 52.0
 size_flags_vertical = 8
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="Label" type="RichTextLabel" parent="MenuBar/VBoxContainer/Creditbox"]
-margin_right = 224.0
+[node name="Label" type="RichTextLabel" parent="MenuBar/VBoxContainer2/TabContainer/Buttons/VBoxContainer/Creditbox"]
+margin_right = 284.0
 margin_bottom = 24.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
@@ -134,35 +253,35 @@ text = "Credits"
 fit_content_height = true
 scroll_active = false
 
-[node name="Value" type="RichTextLabel" parent="MenuBar/VBoxContainer/Creditbox"]
-margin_left = 228.0
-margin_right = 307.0
+[node name="Value" type="RichTextLabel" parent="MenuBar/VBoxContainer2/TabContainer/Buttons/VBoxContainer/Creditbox"]
+margin_left = 288.0
+margin_right = 388.0
 margin_bottom = 24.0
 size_flags_horizontal = 3
 size_flags_stretch_ratio = 0.35
 bbcode_enabled = true
-bbcode_text = "[right]0$[/right]"
-text = "0$"
+bbcode_text = "[right]5$[/right]"
+text = "5$"
 fit_content_height = true
 scroll_active = false
 
-[node name="HSeparator" type="HSeparator" parent="MenuBar/VBoxContainer"]
+[node name="HSeparator" type="HSeparator" parent="MenuBar/VBoxContainer2/TabContainer/Buttons/VBoxContainer"]
 self_modulate = Color( 0, 0, 0, 1 )
 margin_top = 56.0
-margin_right = 307.0
+margin_right = 388.0
 margin_bottom = 60.0
 
-[node name="Timebox" type="HBoxContainer" parent="MenuBar/VBoxContainer"]
+[node name="Timebox" type="HBoxContainer" parent="MenuBar/VBoxContainer2/TabContainer/Buttons/VBoxContainer"]
 margin_top = 64.0
-margin_right = 307.0
+margin_right = 388.0
 margin_bottom = 88.0
 size_flags_vertical = 8
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="Label" type="RichTextLabel" parent="MenuBar/VBoxContainer/Timebox"]
-margin_right = 178.0
+[node name="Label" type="RichTextLabel" parent="MenuBar/VBoxContainer2/TabContainer/Buttons/VBoxContainer/Timebox"]
+margin_right = 225.0
 margin_bottom = 24.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
@@ -170,9 +289,9 @@ text = "Time"
 fit_content_height = true
 scroll_active = false
 
-[node name="Value" type="RichTextLabel" parent="MenuBar/VBoxContainer/Timebox"]
-margin_left = 182.0
-margin_right = 307.0
+[node name="Value" type="RichTextLabel" parent="MenuBar/VBoxContainer2/TabContainer/Buttons/VBoxContainer/Timebox"]
+margin_left = 229.0
+margin_right = 388.0
 margin_bottom = 24.0
 size_flags_horizontal = 3
 size_flags_stretch_ratio = 0.7
@@ -182,15 +301,15 @@ text = "0"
 fit_content_height = true
 scroll_active = false
 
-[node name="HSeparator3" type="HSeparator" parent="MenuBar/VBoxContainer"]
+[node name="HSeparator4" type="HSeparator" parent="MenuBar/VBoxContainer2/TabContainer/Buttons/VBoxContainer"]
 self_modulate = Color( 0, 0, 0, 1 )
 margin_top = 92.0
-margin_right = 307.0
+margin_right = 388.0
 margin_bottom = 96.0
 
-[node name="Label" type="RichTextLabel" parent="MenuBar/VBoxContainer"]
+[node name="Label" type="RichTextLabel" parent="MenuBar/VBoxContainer2/TabContainer/Buttons/VBoxContainer"]
 margin_top = 100.0
-margin_right = 307.0
+margin_right = 388.0
 margin_bottom = 124.0
 text = "Ring Speed control"
 fit_content_height = true
@@ -199,24 +318,24 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="Ring1Box" type="HBoxContainer" parent="MenuBar/VBoxContainer"]
+[node name="Ring1Box" type="HBoxContainer" parent="MenuBar/VBoxContainer2/TabContainer/Buttons/VBoxContainer"]
 margin_top = 128.0
-margin_right = 307.0
-margin_bottom = 176.0
+margin_right = 388.0
+margin_bottom = 161.0
 
-[node name="RichTextLabel" type="RichTextLabel" parent="MenuBar/VBoxContainer/Ring1Box"]
-margin_right = 134.0
-margin_bottom = 48.0
+[node name="RichTextLabel" type="RichTextLabel" parent="MenuBar/VBoxContainer2/TabContainer/Buttons/VBoxContainer/Ring1Box"]
+margin_right = 170.0
+margin_bottom = 33.0
 size_flags_horizontal = 3
 size_flags_stretch_ratio = 2.5
 text = "Inner Ring"
 fit_content_height = true
 scroll_active = false
 
-[node name="Ring1Left" type="Button" parent="MenuBar/VBoxContainer/Ring1Box"]
-margin_left = 138.0
-margin_right = 191.0
-margin_bottom = 48.0
+[node name="Ring1Left" type="Button" parent="MenuBar/VBoxContainer2/TabContainer/Buttons/VBoxContainer/Ring1Box"]
+margin_left = 174.0
+margin_right = 243.0
+margin_bottom = 33.0
 focus_mode = 0
 size_flags_horizontal = 3
 size_flags_vertical = 3
@@ -224,20 +343,20 @@ enabled_focus_mode = 0
 icon = ExtResource( 24 )
 expand_icon = true
 
-[node name="RichTextLabel2" type="RichTextLabel" parent="MenuBar/VBoxContainer/Ring1Box"]
-margin_left = 195.0
-margin_right = 249.0
-margin_bottom = 48.0
+[node name="RichTextLabel2" type="RichTextLabel" parent="MenuBar/VBoxContainer2/TabContainer/Buttons/VBoxContainer/Ring1Box"]
+margin_left = 247.0
+margin_right = 315.0
+margin_bottom = 33.0
 size_flags_horizontal = 3
 bbcode_enabled = true
 bbcode_text = "[center]1[/center]"
 text = "1"
 scroll_active = false
 
-[node name="Ring1Right" type="Button" parent="MenuBar/VBoxContainer/Ring1Box"]
-margin_left = 253.0
-margin_right = 307.0
-margin_bottom = 48.0
+[node name="Ring1Right" type="Button" parent="MenuBar/VBoxContainer2/TabContainer/Buttons/VBoxContainer/Ring1Box"]
+margin_left = 319.0
+margin_right = 388.0
+margin_bottom = 33.0
 grow_horizontal = 2
 grow_vertical = 2
 focus_mode = 0
@@ -247,24 +366,24 @@ enabled_focus_mode = 0
 icon = ExtResource( 3 )
 expand_icon = true
 
-[node name="Ring2Box" type="HBoxContainer" parent="MenuBar/VBoxContainer"]
-margin_top = 180.0
-margin_right = 307.0
-margin_bottom = 228.0
+[node name="Ring2Box" type="HBoxContainer" parent="MenuBar/VBoxContainer2/TabContainer/Buttons/VBoxContainer"]
+margin_top = 165.0
+margin_right = 388.0
+margin_bottom = 198.0
 
-[node name="RichTextLabel" type="RichTextLabel" parent="MenuBar/VBoxContainer/Ring2Box"]
-margin_right = 134.0
-margin_bottom = 48.0
+[node name="RichTextLabel" type="RichTextLabel" parent="MenuBar/VBoxContainer2/TabContainer/Buttons/VBoxContainer/Ring2Box"]
+margin_right = 170.0
+margin_bottom = 33.0
 size_flags_horizontal = 3
 size_flags_stretch_ratio = 2.5
 text = "Middle Ring"
 fit_content_height = true
 scroll_active = false
 
-[node name="Ring2Left" type="Button" parent="MenuBar/VBoxContainer/Ring2Box"]
-margin_left = 138.0
-margin_right = 191.0
-margin_bottom = 48.0
+[node name="Ring2Left" type="Button" parent="MenuBar/VBoxContainer2/TabContainer/Buttons/VBoxContainer/Ring2Box"]
+margin_left = 174.0
+margin_right = 243.0
+margin_bottom = 33.0
 focus_mode = 0
 size_flags_horizontal = 3
 size_flags_vertical = 3
@@ -272,20 +391,20 @@ enabled_focus_mode = 0
 icon = ExtResource( 24 )
 expand_icon = true
 
-[node name="RichTextLabel2" type="RichTextLabel" parent="MenuBar/VBoxContainer/Ring2Box"]
-margin_left = 195.0
-margin_right = 249.0
-margin_bottom = 48.0
+[node name="RichTextLabel2" type="RichTextLabel" parent="MenuBar/VBoxContainer2/TabContainer/Buttons/VBoxContainer/Ring2Box"]
+margin_left = 247.0
+margin_right = 315.0
+margin_bottom = 33.0
 size_flags_horizontal = 3
 bbcode_enabled = true
 bbcode_text = "[center]1[/center]"
 text = "1"
 scroll_active = false
 
-[node name="Ring2Right" type="Button" parent="MenuBar/VBoxContainer/Ring2Box"]
-margin_left = 253.0
-margin_right = 307.0
-margin_bottom = 48.0
+[node name="Ring2Right" type="Button" parent="MenuBar/VBoxContainer2/TabContainer/Buttons/VBoxContainer/Ring2Box"]
+margin_left = 319.0
+margin_right = 388.0
+margin_bottom = 33.0
 grow_horizontal = 2
 grow_vertical = 2
 focus_mode = 0
@@ -295,24 +414,24 @@ enabled_focus_mode = 0
 icon = ExtResource( 3 )
 expand_icon = true
 
-[node name="Ring3Box" type="HBoxContainer" parent="MenuBar/VBoxContainer"]
-margin_top = 232.0
-margin_right = 307.0
-margin_bottom = 280.0
+[node name="Ring3Box" type="HBoxContainer" parent="MenuBar/VBoxContainer2/TabContainer/Buttons/VBoxContainer"]
+margin_top = 202.0
+margin_right = 388.0
+margin_bottom = 235.0
 
-[node name="RichTextLabel" type="RichTextLabel" parent="MenuBar/VBoxContainer/Ring3Box"]
-margin_right = 134.0
-margin_bottom = 48.0
+[node name="RichTextLabel" type="RichTextLabel" parent="MenuBar/VBoxContainer2/TabContainer/Buttons/VBoxContainer/Ring3Box"]
+margin_right = 170.0
+margin_bottom = 33.0
 size_flags_horizontal = 3
 size_flags_stretch_ratio = 2.5
 text = "Outer Ring"
 fit_content_height = true
 scroll_active = false
 
-[node name="Ring3Left" type="Button" parent="MenuBar/VBoxContainer/Ring3Box"]
-margin_left = 138.0
-margin_right = 191.0
-margin_bottom = 48.0
+[node name="Ring3Left" type="Button" parent="MenuBar/VBoxContainer2/TabContainer/Buttons/VBoxContainer/Ring3Box"]
+margin_left = 174.0
+margin_right = 243.0
+margin_bottom = 33.0
 focus_mode = 0
 size_flags_horizontal = 3
 size_flags_vertical = 3
@@ -320,20 +439,20 @@ enabled_focus_mode = 0
 icon = ExtResource( 24 )
 expand_icon = true
 
-[node name="RichTextLabel2" type="RichTextLabel" parent="MenuBar/VBoxContainer/Ring3Box"]
-margin_left = 195.0
-margin_right = 249.0
-margin_bottom = 48.0
+[node name="RichTextLabel2" type="RichTextLabel" parent="MenuBar/VBoxContainer2/TabContainer/Buttons/VBoxContainer/Ring3Box"]
+margin_left = 247.0
+margin_right = 315.0
+margin_bottom = 33.0
 size_flags_horizontal = 3
 bbcode_enabled = true
 bbcode_text = "[center]1[/center]"
 text = "1"
 scroll_active = false
 
-[node name="Ring3Right" type="Button" parent="MenuBar/VBoxContainer/Ring3Box"]
-margin_left = 253.0
-margin_right = 307.0
-margin_bottom = 48.0
+[node name="Ring3Right" type="Button" parent="MenuBar/VBoxContainer2/TabContainer/Buttons/VBoxContainer/Ring3Box"]
+margin_left = 319.0
+margin_right = 388.0
+margin_bottom = 33.0
 grow_horizontal = 2
 grow_vertical = 2
 focus_mode = 0
@@ -343,16 +462,28 @@ enabled_focus_mode = 0
 icon = ExtResource( 3 )
 expand_icon = true
 
-[node name="HSeparator2" type="HSeparator" parent="MenuBar/VBoxContainer"]
+[node name="HSeparator2" type="HSeparator" parent="MenuBar/VBoxContainer2/TabContainer/Buttons/VBoxContainer"]
+self_modulate = Color( 0, 0, 0, 1 )
+margin_top = 239.0
+margin_right = 388.0
+margin_bottom = 243.0
+
+[node name="Instructions" type="Button" parent="MenuBar/VBoxContainer2/TabContainer/Buttons/VBoxContainer"]
+margin_top = 247.0
+margin_right = 388.0
+margin_bottom = 280.0
+text = "Instructions"
+
+[node name="HSeparator3" type="HSeparator" parent="MenuBar/VBoxContainer2/TabContainer/Buttons/VBoxContainer"]
 self_modulate = Color( 0, 0, 0, 1 )
 margin_top = 284.0
-margin_right = 307.0
+margin_right = 388.0
 margin_bottom = 288.0
 
-[node name="Pause" type="Button" parent="MenuBar/VBoxContainer"]
+[node name="Pause" type="Button" parent="MenuBar/VBoxContainer2/TabContainer/Buttons/VBoxContainer"]
 pause_mode = 2
 margin_top = 292.0
-margin_right = 307.0
+margin_right = 388.0
 margin_bottom = 325.0
 disabled = true
 toggle_mode = true
@@ -360,26 +491,26 @@ enabled_focus_mode = 0
 text = "Pause"
 script = ExtResource( 28 )
 
-[node name="Start" type="Button" parent="MenuBar/VBoxContainer"]
+[node name="Start" type="Button" parent="MenuBar/VBoxContainer2/TabContainer/Buttons/VBoxContainer"]
 pause_mode = 2
 margin_top = 329.0
-margin_right = 307.0
+margin_right = 388.0
 margin_bottom = 362.0
 focus_mode = 0
 enabled_focus_mode = 0
 text = "Start"
 
-[node name="Exit" type="Button" parent="MenuBar/VBoxContainer"]
+[node name="Exit" type="Button" parent="MenuBar/VBoxContainer2/TabContainer/Buttons/VBoxContainer"]
 pause_mode = 2
 margin_top = 366.0
-margin_right = 307.0
+margin_right = 388.0
 margin_bottom = 399.0
 focus_mode = 0
 enabled_focus_mode = 0
 text = "Exit"
 
 [node name="TextureRect" type="TextureRect" parent="."]
-anchor_right = 0.8
+anchor_right = 0.75
 anchor_bottom = 1.0
 texture = ExtResource( 9 )
 stretch_mode = 2
@@ -388,13 +519,14 @@ __meta__ = {
 }
 
 [node name="ViewportContainer" type="ViewportContainer" parent="."]
-anchor_right = 0.8
+anchor_right = 0.75
 anchor_bottom = 1.0
 margin_left = 3.1748
 margin_top = -1.5874
 margin_right = 3.1748
 margin_bottom = -1.5874
 input_pass_on_modal_close_click = false
+theme = ExtResource( 6 )
 stretch = true
 script = ExtResource( 23 )
 __meta__ = {
@@ -402,7 +534,7 @@ __meta__ = {
 }
 
 [node name="Viewport" type="Viewport" parent="ViewportContainer"]
-size = Vector2( 1536, 1080 )
+size = Vector2( 1440, 1080 )
 transparent_bg = true
 handle_input_locally = false
 render_target_update_mode = 3
@@ -915,13 +1047,15 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[connection signal="pressed" from="MenuBar/VBoxContainer/Ring1Box/Ring1Left" to="MenuBar" method="_on_Ring1Left_pressed"]
-[connection signal="pressed" from="MenuBar/VBoxContainer/Ring1Box/Ring1Right" to="MenuBar" method="_on_Ring1Right_pressed"]
-[connection signal="pressed" from="MenuBar/VBoxContainer/Ring2Box/Ring2Left" to="MenuBar" method="_on_Ring2Left_pressed"]
-[connection signal="pressed" from="MenuBar/VBoxContainer/Ring2Box/Ring2Right" to="MenuBar" method="_on_Ring2Right_pressed"]
-[connection signal="pressed" from="MenuBar/VBoxContainer/Ring3Box/Ring3Left" to="MenuBar" method="_on_Ring3Left_pressed"]
-[connection signal="pressed" from="MenuBar/VBoxContainer/Ring3Box/Ring3Right" to="MenuBar" method="_on_Ring3Right_pressed"]
-[connection signal="toggled" from="MenuBar/VBoxContainer/Pause" to="MenuBar/VBoxContainer/Pause" method="_on_Pause_toggled"]
-[connection signal="pressed" from="MenuBar/VBoxContainer/Start" to="." method="_on_Start_pressed"]
-[connection signal="pressed" from="MenuBar/VBoxContainer/Exit" to="." method="_on_Exit_pressed"]
+[connection signal="pressed" from="MenuBar/VBoxContainer2/TabContainer/Instructions/VBoxContainer/Game" to="MenuBar" method="_on_Game_pressed"]
+[connection signal="pressed" from="MenuBar/VBoxContainer2/TabContainer/Buttons/VBoxContainer/Ring1Box/Ring1Left" to="MenuBar" method="_on_Ring1Left_pressed"]
+[connection signal="pressed" from="MenuBar/VBoxContainer2/TabContainer/Buttons/VBoxContainer/Ring1Box/Ring1Right" to="MenuBar" method="_on_Ring1Right_pressed"]
+[connection signal="pressed" from="MenuBar/VBoxContainer2/TabContainer/Buttons/VBoxContainer/Ring2Box/Ring2Left" to="MenuBar" method="_on_Ring2Left_pressed"]
+[connection signal="pressed" from="MenuBar/VBoxContainer2/TabContainer/Buttons/VBoxContainer/Ring2Box/Ring2Right" to="MenuBar" method="_on_Ring2Right_pressed"]
+[connection signal="pressed" from="MenuBar/VBoxContainer2/TabContainer/Buttons/VBoxContainer/Ring3Box/Ring3Left" to="MenuBar" method="_on_Ring3Left_pressed"]
+[connection signal="pressed" from="MenuBar/VBoxContainer2/TabContainer/Buttons/VBoxContainer/Ring3Box/Ring3Right" to="MenuBar" method="_on_Ring3Right_pressed"]
+[connection signal="pressed" from="MenuBar/VBoxContainer2/TabContainer/Buttons/VBoxContainer/Instructions" to="MenuBar" method="_on_Instructions_pressed"]
+[connection signal="toggled" from="MenuBar/VBoxContainer2/TabContainer/Buttons/VBoxContainer/Pause" to="MenuBar/VBoxContainer2/TabContainer/Buttons/VBoxContainer/Pause" method="_on_Pause_toggled"]
+[connection signal="pressed" from="MenuBar/VBoxContainer2/TabContainer/Buttons/VBoxContainer/Start" to="." method="_on_Start_pressed"]
+[connection signal="pressed" from="MenuBar/VBoxContainer2/TabContainer/Buttons/VBoxContainer/Exit" to="." method="_on_Exit_pressed"]
 [connection signal="pressed" from="ViewportContainer/NinePatchRect/Button" to="ViewportContainer" method="_on_Button_pressed"]
