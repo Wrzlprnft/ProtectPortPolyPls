@@ -64,6 +64,8 @@ func _ready():
 	Events.connect("change_health",self,"change_health")
 	Events.connect("change_currency",self,"change_currency")
 	Events.rng.randomize()
+	$Menu.play()
+	$Background.play()
 
 func _input(event):
 	if event is InputEventMouseButton and current_mount and running:
@@ -124,12 +126,14 @@ func start_game() -> void:
 	spawn_cooldown = start_cooldown
 	if not running:
 		Events.emit_signal("start_game")
+		$AnimationPlayer.play("fadetogame")
 		yield(Events,"game_started")
 		running = true	
 	
 func end_game() -> void:
 	running = false
 	Events.emit_signal("game_ended")
+	$AnimationPlayer.play_backwards("fadetogame")
 	
 
 

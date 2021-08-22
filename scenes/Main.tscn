@@ -1,4 +1,4 @@
-[gd_scene load_steps=35 format=2]
+[gd_scene load_steps=38 format=2]
 
 [ext_resource path="res://scripts/Main.gd" type="Script" id=1]
 [ext_resource path="res://scenes/Laserbeam.tscn" type="PackedScene" id=2]
@@ -29,6 +29,8 @@
 [ext_resource path="res://scripts/MenuBar.gd" type="Script" id=27]
 [ext_resource path="res://scripts/Pause.gd" type="Script" id=28]
 [ext_resource path="res://assets/ui/metalPanel_plate.png" type="Texture" id=29]
+[ext_resource path="res://assets/audio/dark-times-by-kevin-macleod-from-filmmusic-io.mp3" type="AudioStream" id=30]
+[ext_resource path="res://assets/audio/gathering-darkness-by-kevin-macleod-from-filmmusic-io.mp3" type="AudioStream" id=31]
 
 [sub_resource type="Animation" id=1]
 resource_name = "thing"
@@ -75,6 +77,58 @@ tracks/1/keys = {
 }
 
 [sub_resource type="Environment" id=5]
+
+[sub_resource type="Animation" id=6]
+resource_name = "fadetogame"
+length = 2.0
+tracks/0/type = "value"
+tracks/0/path = NodePath("Menu:volume_db")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 1.9 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ -15.0, -80.0 ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("Menu:stream_paused")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 1.9, 2 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 1,
+"values": [ false, true ]
+}
+tracks/2/type = "value"
+tracks/2/path = NodePath("Background:volume_db")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/keys = {
+"times": PoolRealArray( 0.1, 2 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ -80.0, -40.0 ]
+}
+tracks/3/type = "value"
+tracks/3/path = NodePath("Background:stream_paused")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/keys = {
+"times": PoolRealArray( 0, 0.1 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 1,
+"values": [ true, false ]
+}
 
 [node name="Main" type="Node"]
 script = ExtResource( 1 )
@@ -143,7 +197,7 @@ anims/thing = SubResource( 1 )
 [node name="TabContainer" type="TabContainer" parent="MenuBar/VBoxContainer2"]
 margin_top = 52.0
 margin_right = 408.0
-margin_bottom = 972.0
+margin_bottom = 954.0
 size_flags_vertical = 3
 tab_align = 0
 tabs_visible = false
@@ -152,6 +206,7 @@ __meta__ = {
 }
 
 [node name="Instructions" type="Tabs" parent="MenuBar/VBoxContainer2/TabContainer"]
+visible = false
 anchor_right = 1.0
 anchor_bottom = 1.0
 margin_left = 10.0
@@ -168,7 +223,7 @@ __meta__ = {
 
 [node name="Label2" type="RichTextLabel" parent="MenuBar/VBoxContainer2/TabContainer/Instructions/VBoxContainer"]
 margin_right = 388.0
-margin_bottom = 863.0
+margin_bottom = 845.0
 size_flags_vertical = 3
 text = "Instructions:
 
@@ -191,13 +246,12 @@ __meta__ = {
 }
 
 [node name="Game" type="Button" parent="MenuBar/VBoxContainer2/TabContainer/Instructions/VBoxContainer"]
-margin_top = 867.0
+margin_top = 849.0
 margin_right = 388.0
-margin_bottom = 900.0
+margin_bottom = 882.0
 text = "Game"
 
 [node name="Buttons" type="Tabs" parent="MenuBar/VBoxContainer2/TabContainer"]
-visible = false
 anchor_right = 1.0
 anchor_bottom = 1.0
 margin_left = 10.0
@@ -542,7 +596,7 @@ __meta__ = {
 }
 
 [node name="Viewport" type="Viewport" parent="ViewportContainer"]
-size = Vector2( 1440, 1080 )
+size = Vector2( 1440, 1060 )
 transparent_bg = true
 handle_input_locally = false
 render_target_update_mode = 3
@@ -999,7 +1053,7 @@ material/1 = null
 material/2 = null
 
 [node name="Camera" type="Camera" parent="ViewportContainer/Viewport"]
-transform = Transform( 0.519528, 0.390924, -0.759782, 0.607108, 0.456825, 0.650178, 0.601257, -0.799055, 0, -8.071, 5.35989, 0.959388 )
+transform = Transform( 0.519529, 0.390924, -0.759782, 0.607108, 0.456824, 0.650178, 0.601257, -0.799056, -2.38419e-07, -8.071, 5.35989, 0.959388 )
 projection = 1
 current = true
 fov = 120.0
@@ -1054,6 +1108,17 @@ icon = ExtResource( 26 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
+
+[node name="Background" type="AudioStreamPlayer" parent="."]
+stream = ExtResource( 31 )
+volume_db = -72.1053
+
+[node name="Menu" type="AudioStreamPlayer" parent="."]
+stream = ExtResource( 30 )
+volume_db = -28.6842
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+anims/fadetogame = SubResource( 6 )
 
 [connection signal="pressed" from="MenuBar/VBoxContainer2/TabContainer/Instructions/VBoxContainer/Game" to="MenuBar" method="_on_Game_pressed"]
 [connection signal="pressed" from="MenuBar/VBoxContainer2/TabContainer/Buttons/VBoxContainer/Ring1Box/Ring1Left" to="MenuBar" method="_on_Ring1Left_pressed"]

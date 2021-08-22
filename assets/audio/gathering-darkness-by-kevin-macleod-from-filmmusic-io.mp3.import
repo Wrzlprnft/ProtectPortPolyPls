@@ -1,0 +1,15 @@
+[remap]
+
+importer="mp3"
+type="AudioStreamMP3"
+path="res://.import/gathering-darkness-by-kevin-macleod-from-filmmusic-io.mp3-caadd5c2f7588696b64de4f97f28a15a.mp3str"
+
+[deps]
+
+source_file="res://assets/audio/gathering-darkness-by-kevin-macleod-from-filmmusic-io.mp3"
+dest_files=[ "res://.import/gathering-darkness-by-kevin-macleod-from-filmmusic-io.mp3-caadd5c2f7588696b64de4f97f28a15a.mp3str" ]
+
+[params]
+
+loop=true
+loop_offset=0
