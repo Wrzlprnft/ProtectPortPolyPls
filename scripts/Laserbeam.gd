@@ -19,6 +19,7 @@ func fire(o,t) -> void:
 	$Sprite3D2.scale_object_local(s)
 	$Sprite3D.look_at(tv,Vector3.UP)
 	$Sprite3D2.look_at(tv,Vector3.UP)
+	Events.emit_signal("request_pewpew")
 	if t:
 		t.damage(1)
 	$AnimationPlayer.play("fade")

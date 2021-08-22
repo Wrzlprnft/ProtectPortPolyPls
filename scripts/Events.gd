@@ -27,10 +27,12 @@ signal speed1_changed(new_value)
 signal speed2_changed(new_value)
 signal speed3_changed(new_value)
 
-signal fully_armed_and_operational()
+signal request_pewpew()
 
 
 onready var rng = RandomNumberGenerator.new()
 
 var meteor_particle_scene = preload("res://scenes/MeteorParticles.tscn")
+var meteor_sound_scene = preload("res://scenes/MeteorDeath.tscn")
+var impact_sound_scene = preload("res://scenes/ImpactSound.tscn")
 var station_particle_scene = preload("res://scenes/StationParticles.tscn")

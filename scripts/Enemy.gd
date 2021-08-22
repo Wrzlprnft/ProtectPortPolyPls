@@ -29,6 +29,8 @@ func die() -> void:
 	var particles = Events.meteor_particle_scene.instance()
 	get_parent().add_child(particles)
 	particles.translate_object_local(translation)
+	var sound = Events.meteor_sound_scene.instance()
+	get_parent().add_child(sound)
 	get_parent().remove_child(self)
 	queue_free()
 
@@ -50,6 +52,8 @@ func _physics_process(delta):
 	
 	if collision:		
 		Events.emit_signal("change_health",-1)
+		var sound = Events.impact_sound_scene.instance()
+		get_parent().add_child(sound)
 		var particles = Events.station_particle_scene.instance()
 		get_parent().add_child(particles)
 		particles.translate_object_local(collision.position)

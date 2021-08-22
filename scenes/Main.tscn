@@ -1,4 +1,4 @@
-[gd_scene load_steps=38 format=2]
+[gd_scene load_steps=39 format=2]
 
 [ext_resource path="res://scripts/Main.gd" type="Script" id=1]
 [ext_resource path="res://scenes/Laserbeam.tscn" type="PackedScene" id=2]
@@ -31,6 +31,7 @@
 [ext_resource path="res://assets/ui/metalPanel_plate.png" type="Texture" id=29]
 [ext_resource path="res://assets/audio/dark-times-by-kevin-macleod-from-filmmusic-io.mp3" type="AudioStream" id=30]
 [ext_resource path="res://assets/audio/gathering-darkness-by-kevin-macleod-from-filmmusic-io.mp3" type="AudioStream" id=31]
+[ext_resource path="res://assets/audio/laserSmall_002.ogg" type="AudioStream" id=32]
 
 [sub_resource type="Animation" id=1]
 resource_name = "thing"
@@ -206,7 +207,6 @@ __meta__ = {
 }
 
 [node name="Instructions" type="Tabs" parent="MenuBar/VBoxContainer2/TabContainer"]
-visible = false
 anchor_right = 1.0
 anchor_bottom = 1.0
 margin_left = 10.0
@@ -240,7 +240,21 @@ Turret   Damage: 1
 
 Asteroid   Health: 3
 Asteroid Damage: 1
-Astroid  Reward: 1"
+Astroid  Reward: 1
+
+Credits:
+Music  by  Kevin MacLeod:
+	dark   times
+	gathering   darkness
+	
+Assets: Kenney
+
+Desing&execution:
+
+Wrzlprnft
+
+Kenney Jam 2021 submission
+theme: rotation"
 __meta__ = {
 "_edit_use_anchors_": false
 }
@@ -252,6 +266,7 @@ margin_bottom = 882.0
 text = "Game"
 
 [node name="Buttons" type="Tabs" parent="MenuBar/VBoxContainer2/TabContainer"]
+visible = false
 anchor_right = 1.0
 anchor_bottom = 1.0
 margin_left = 10.0
@@ -1111,14 +1126,33 @@ __meta__ = {
 
 [node name="Background" type="AudioStreamPlayer" parent="."]
 stream = ExtResource( 31 )
-volume_db = -72.1053
+volume_db = -80.0
+stream_paused = true
 
 [node name="Menu" type="AudioStreamPlayer" parent="."]
 stream = ExtResource( 30 )
-volume_db = -28.6842
+volume_db = -15.0
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 anims/fadetogame = SubResource( 6 )
+
+[node name="Laser1" type="AudioStreamPlayer" parent="."]
+stream = ExtResource( 32 )
+volume_db = -30.0
+
+[node name="Laser2" type="AudioStreamPlayer" parent="."]
+stream = ExtResource( 32 )
+volume_db = -30.0
+
+[node name="Laser3" type="AudioStreamPlayer" parent="."]
+stream = ExtResource( 32 )
+volume_db = -30.0
+
+[node name="Laser4" type="AudioStreamPlayer" parent="."]
+stream = ExtResource( 32 )
+volume_db = -30.0
+
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
 
 [connection signal="pressed" from="MenuBar/VBoxContainer2/TabContainer/Instructions/VBoxContainer/Game" to="MenuBar" method="_on_Game_pressed"]
 [connection signal="pressed" from="MenuBar/VBoxContainer2/TabContainer/Buttons/VBoxContainer/Ring1Box/Ring1Left" to="MenuBar" method="_on_Ring1Left_pressed"]

@@ -63,9 +63,14 @@ func _ready():
 	Events.connect("build_turret",self,"build_turret")
 	Events.connect("change_health",self,"change_health")
 	Events.connect("change_currency",self,"change_currency")
+	Events.connect("request_pewpew",self, "laser_sound")
 	Events.rng.randomize()
 	$Menu.play()
+	$Menu.stream_paused = false
+	$Menu.volume_db = -15
 	$Background.play()
+	$Background.stream_paused = true
+	$Background.volume_db = -80
 
 func _input(event):
 	if event is InputEventMouseButton and current_mount and running:
@@ -118,6 +123,16 @@ func spawn_meteor() -> void:
 	spawnpoint = spawnpoint.rotated(Vector3.UP,Events.rng.randf_range(0.0,2* PI))
 	meteor.translate(spawnpoint)
 	$ViewportContainer/Viewport.add_child(meteor)
+	
+func laser_sound() -> void:
+	if not $Laser1.playing:
+		$Laser1.play()
+	elif not $Laser2.playing:
+		$Laser2.play()
+	elif not $Laser3.playing:
+		$Laser3.play()	
+	elif not $Laser4.playing:
+		$Laser4.play()
 	
 func start_game() -> void:
 	set_health(10)
