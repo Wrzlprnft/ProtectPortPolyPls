@@ -26,10 +26,10 @@ var meteor_scene = preload("res://scenes/Enemy.tscn")
 
 
 func set_health (newHealth) -> void:
-	if newHealth == 0:
+	if newHealth <= 0 and running:
 		health = newHealth
 		end_game()
-	elif health > 0:
+	elif newHealth > 0:
 		health = newHealth
 	$MenuBar/VBoxContainer2/TabContainer/Buttons/VBoxContainer/Healthbox/Value.bbcode_text = "[right]" + str(newHealth) + "[/right]"
 	
@@ -57,6 +57,7 @@ func clear_mount_tracking() -> void:
 	
 # Called when the node enters the scene tree for the first time.
 func _ready():
+	OS.min_window_size = Vector2(800, 480)
 	Events.connect("mount_entered",self,"set_current_mount")
 	Events.connect("mount_exited",self,"clear_current_mount")
 	Events.connect("mount_deselected",self,"clear_mount_tracking")
