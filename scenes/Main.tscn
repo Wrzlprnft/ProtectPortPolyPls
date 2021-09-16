@@ -620,6 +620,7 @@ grow_vertical = 2
 size_flags_horizontal = 7
 size_flags_vertical = 7
 size_flags_stretch_ratio = 2.29
+stretch_mode = 0
 script = ExtResource( 33 )
 __meta__ = {
 "_edit_use_anchors_": false
