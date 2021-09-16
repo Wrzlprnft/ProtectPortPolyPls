@@ -1,11 +1,15 @@
-[gd_scene load_steps=5 format=2]
+[gd_scene load_steps=7 format=2]
 
 [ext_resource path="res://assets/models/Ring/machine_barrelLarge.obj" type="ArrayMesh" id=1]
 [ext_resource path="res://assets/models/Ring/hangar_largeB.obj" type="ArrayMesh" id=2]
 [ext_resource path="res://scripts/TurretMount.gd" type="Script" id=3]
+[ext_resource path="res://assets/crosshair120.png" type="Texture" id=4]
 
 [sub_resource type="CapsuleShape" id=1]
 radius = 0.4
+
+[sub_resource type="ViewportTexture" id=2]
+viewport_path = NodePath("Spatial/TurretMount/Viewport")
 
 [node name="RingSegment3" type="Spatial"]
 
@@ -37,6 +41,28 @@ shape = SubResource( 1 )
 
 [node name="Position" type="Position3D" parent="Spatial/TurretMount"]
 transform = Transform( -1.49012e-08, 0, 1, 0, 1, 0, -1, 0, -1.49012e-08, 0, 0.5, 0 )
+
+[node name="Viewport" type="Viewport" parent="Spatial/TurretMount"]
+size = Vector2( 64, 64 )
+size_override_stretch = true
+own_world = true
+transparent_bg = true
+usage = 0
+render_target_v_flip = true
+
+[node name="Mount" type="TextureRect" parent="Spatial/TurretMount/Viewport"]
+modulate = Color( 1, 0, 0, 1 )
+margin_right = 64.0
+margin_bottom = 64.0
+texture = ExtResource( 4 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Sprite3D" type="Sprite3D" parent="Spatial/TurretMount"]
+transform = Transform( 0.5, 0, -2.98023e-08, 0, 1, 0, 2.98023e-08, 0, 0.5, 0, 0.990099, 0 )
+billboard = 1
+texture = SubResource( 2 )
 
 [node name="MeshInstance" type="MeshInstance" parent="Spatial"]
 transform = Transform( 0.5, 0, 0, 0, 0.5, 0, 0, 0, 1, 0, 0, 0 )

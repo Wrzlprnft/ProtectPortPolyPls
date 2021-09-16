@@ -18,7 +18,7 @@ func _input( event ):
 		$Viewport.unhandled_input(event)
 
 func update_mount_position(pos):
-	$Mount.rect_global_position = $Viewport/Camera.unproject_position(pos) - $Mount.rect_size/2.0
+	$Mount.rect_global_position = ($Viewport/Camera.unproject_position(pos) - $Mount.rect_size/2.0) + rect_global_position
 	
 func show_turret_menu() -> void:
 	$Mount.show()

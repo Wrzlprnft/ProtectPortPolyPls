@@ -24,6 +24,10 @@ Events="*res://scripts/Events.gd"
 window/size/width=1920
 window/size/height=1060
 
+[editor_plugins]
+
+enabled=PoolStringArray( "res://addons/Todo_Manager/plugin.cfg" )
+
 [physics]
 
 common/enable_pause_aware_picking=true

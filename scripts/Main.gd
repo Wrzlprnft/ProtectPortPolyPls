@@ -1,6 +1,6 @@
 extends Node
 
-var running = false
+var running := false
 
 var health := 10 setget set_health
 var currency := 5 setget set_currency
@@ -31,7 +31,7 @@ func set_health (newHealth) -> void:
 		end_game()
 	elif newHealth > 0:
 		health = newHealth
-	$MenuBar/VBoxContainer2/TabContainer/Buttons/VBoxContainer/Healthbox/Value.bbcode_text = "[right]" + str(newHealth) + "[/right]"
+	$GameplayUI/RightBar/VBoxContainer2/TabContainer/Buttons/VBoxContainer/Healthbox/Value.bbcode_text = "[right]" + str(newHealth) + "[/right]"
 	
 func change_health(delta) -> void:
 	set_health(health + delta)
@@ -91,7 +91,7 @@ func _process(delta):
 		Events.emit_signal("update_time",time)
 		if time > difficulty * 10.0:
 			difficulty += 1
-			spawn_cooldown = max(start_cooldown - difficulty * difficulty_increase,10)
+			spawn_cooldown = max(start_cooldown - difficulty * difficulty_increase,10.0)
 			difficulty_increase += 1
 		
 func _physics_process(delta):
@@ -108,12 +108,12 @@ func build_turret(id) -> void:
 	change_currency(-5)
 	tracked_mount.get_parent().get_node("CollisionShape").disabled = true
 	var turret = turret_scene.instance()
-	var ring = $ViewportContainer/Viewport/Ring1
+	var ring = $GameplayUI/Center/ViewportContainer/Viewport/Ring1
 	match tracked_ring_id:
 		2:
-			ring = $ViewportContainer/Viewport/Ring2
+			ring = $GameplayUI/Center/ViewportContainer/Viewport/Ring2
 		3:
-			ring = $ViewportContainer/Viewport/Ring3
+			ring = $GameplayUI/Center/ViewportContainer/Viewport/Ring3
 	ring.add_child(turret)
 	turret.translate(ring.to_local(tracked_mount.to_global(Vector3.ZERO)))
 	
@@ -124,7 +124,7 @@ func spawn_meteor() -> void:
 	var spawnpoint = Vector3(-20,0,0)
 	spawnpoint = spawnpoint.rotated(Vector3.UP,Events.rng.randf_range(0.0,2* PI))
 	meteor.translate(spawnpoint)
-	$ViewportContainer/Viewport.add_child(meteor)
+	$GameplayUI/Center/ViewportContainer/Viewport.add_child(meteor)
 	
 func laser_sound() -> void:
 	if not $Laser1.playing:
