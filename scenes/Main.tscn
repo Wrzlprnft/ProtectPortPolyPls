@@ -1,4 +1,4 @@
-[gd_scene load_steps=40 format=2]
+[gd_scene load_steps=44 format=2]
 
 [ext_resource path="res://scripts/Main.gd" type="Script" id=1]
 [ext_resource path="res://scenes/Laserbeam.tscn" type="PackedScene" id=2]
@@ -26,7 +26,6 @@
 [ext_resource path="res://assets/ui/shadedDark24.png" type="Texture" id=24]
 [ext_resource path="res://assets/crosshair120.png" type="Texture" id=25]
 [ext_resource path="res://assets/ui/turret_double_SE.png" type="Texture" id=26]
-[ext_resource path="res://scripts/MenuBar.gd" type="Script" id=27]
 [ext_resource path="res://scripts/Pause.gd" type="Script" id=28]
 [ext_resource path="res://assets/ui/metalPanel_plate.png" type="Texture" id=29]
 [ext_resource path="res://assets/audio/dark-times-by-kevin-macleod-from-filmmusic-io.mp3" type="AudioStream" id=30]
@@ -34,12 +33,30 @@
 [ext_resource path="res://assets/audio/laserSmall_002.ogg" type="AudioStream" id=32]
 [ext_resource path="res://scripts/AspectRatioContainer.gd" type="Script" id=33]
 
-[sub_resource type="SphereShape" id=2]
-radius = 1.40213
+[sub_resource type="StyleBoxEmpty" id=1]
+
+[sub_resource type="StyleBoxEmpty" id=9]
+
+[sub_resource type="QuadMesh" id=10]
+resource_local_to_scene = true
+
+[sub_resource type="ViewportTexture" id=11]
+viewport_path = NodePath("GameplayUI/Center/ViewportContainer/Viewport/Core/Viewport")
+
+[sub_resource type="SpatialMaterial" id=12]
+resource_local_to_scene = true
+flags_transparent = true
+flags_unshaded = true
+flags_do_not_receive_shadows = true
+params_billboard_mode = 1
+albedo_texture = SubResource( 11 )
 
 [sub_resource type="SphereShape" id=3]
+radius = 1.40213
 
-[sub_resource type="Animation" id=4]
+[sub_resource type="SphereShape" id=4]
+
+[sub_resource type="Animation" id=5]
 length = 2.0
 tracks/0/type = "transform"
 tracks/0/path = NodePath(".")
@@ -73,9 +90,9 @@ tracks/2/keys = {
 "values": [ -0.4, 0.0 ]
 }
 
-[sub_resource type="Environment" id=5]
+[sub_resource type="Environment" id=6]
 
-[sub_resource type="Animation" id=6]
+[sub_resource type="Animation" id=7]
 length = 2.0
 loop = true
 tracks/0/type = "value"
@@ -91,7 +108,7 @@ tracks/0/keys = {
 "values": [ 1.0, 0.99 ]
 }
 
-[sub_resource type="Animation" id=7]
+[sub_resource type="Animation" id=8]
 length = 2.0
 tracks/0/type = "value"
 tracks/0/path = NodePath("Menu:volume_db")
@@ -149,12 +166,21 @@ script = ExtResource( 1 )
 anchor_left = -0.4
 anchor_right = 1.0
 anchor_bottom = 1.0
+theme = ExtResource( 6 )
 alignment = 1
 __meta__ = {
 "_edit_use_anchors_": true
 }
 
-[node name="LeftBar" type="NinePatchRect" parent="GameplayUI"]
+[node name="LeftBar" type="PanelContainer" parent="GameplayUI"]
+margin_right = 624.0
+margin_bottom = 1060.0
+rect_min_size = Vector2( 156, 0 )
+size_flags_horizontal = 3
+size_flags_vertical = 3
+custom_styles/panel = SubResource( 1 )
+
+[node name="GUIBackdrop" type="NinePatchRect" parent="GameplayUI/LeftBar"]
 margin_right = 624.0
 margin_bottom = 1060.0
 rect_min_size = Vector2( 156, 0 )
@@ -167,6 +193,144 @@ patch_margin_left = 11
 patch_margin_top = 11
 patch_margin_right = 11
 patch_margin_bottom = 11
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="MarginContainer" type="MarginContainer" parent="GameplayUI/LeftBar"]
+margin_right = 624.0
+margin_bottom = 1060.0
+custom_constants/margin_right = 0
+custom_constants/margin_top = 10
+custom_constants/margin_left = 10
+custom_constants/margin_bottom = 10
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Content" type="VBoxContainer" parent="GameplayUI/LeftBar/MarginContainer"]
+margin_left = 10.0
+margin_top = 10.0
+margin_right = 624.0
+margin_bottom = 1050.0
+
+[node name="Creditbox" type="HBoxContainer" parent="GameplayUI/LeftBar/MarginContainer/Content"]
+margin_right = 614.0
+margin_bottom = 24.0
+size_flags_vertical = 8
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Label" type="RichTextLabel" parent="GameplayUI/LeftBar/MarginContainer/Content/Creditbox"]
+margin_right = 451.0
+margin_bottom = 24.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+text = "Credits"
+fit_content_height = true
+scroll_active = false
+
+[node name="Value" type="RichTextLabel" parent="GameplayUI/LeftBar/MarginContainer/Content/Creditbox"]
+margin_left = 455.0
+margin_right = 614.0
+margin_bottom = 24.0
+size_flags_horizontal = 3
+size_flags_stretch_ratio = 0.35
+bbcode_enabled = true
+bbcode_text = "[right]5$[/right]"
+text = "5$"
+fit_content_height = true
+scroll_active = false
+
+[node name="Buttons" type="TabContainer" parent="GameplayUI/LeftBar/MarginContainer/Content"]
+margin_top = 28.0
+margin_right = 614.0
+margin_bottom = 219.0
+custom_styles/panel = SubResource( 9 )
+custom_constants/side_margin = 100
+tabs_visible = false
+
+[node name="RingSpeed" type="VBoxContainer" parent="GameplayUI/LeftBar/MarginContainer/Content/Buttons"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="RichTextLabel5" type="RichTextLabel" parent="GameplayUI/LeftBar/MarginContainer/Content/Buttons/RingSpeed"]
+margin_right = 614.0
+margin_bottom = 24.0
+size_flags_horizontal = 3
+size_flags_stretch_ratio = 2.5
+text = "Inner Ring"
+fit_content_height = true
+scroll_active = false
+
+[node name="Ring1Left" type="Button" parent="GameplayUI/LeftBar/MarginContainer/Content/Buttons/RingSpeed"]
+margin_top = 28.0
+margin_right = 614.0
+margin_bottom = 61.0
+focus_mode = 0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+enabled_focus_mode = 0
+icon = ExtResource( 24 )
+expand_icon = true
+
+[node name="RichTextLabel6" type="RichTextLabel" parent="GameplayUI/LeftBar/MarginContainer/Content/Buttons/RingSpeed"]
+margin_top = 65.0
+margin_right = 614.0
+margin_bottom = 89.0
+size_flags_horizontal = 3
+size_flags_stretch_ratio = 2.5
+text = "Middle Ring"
+fit_content_height = true
+scroll_active = false
+
+[node name="Ring2Left" type="Button" parent="GameplayUI/LeftBar/MarginContainer/Content/Buttons/RingSpeed"]
+margin_top = 93.0
+margin_right = 614.0
+margin_bottom = 126.0
+focus_mode = 0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+enabled_focus_mode = 0
+icon = ExtResource( 24 )
+expand_icon = true
+
+[node name="RichTextLabel7" type="RichTextLabel" parent="GameplayUI/LeftBar/MarginContainer/Content/Buttons/RingSpeed"]
+margin_top = 130.0
+margin_right = 614.0
+margin_bottom = 154.0
+size_flags_horizontal = 3
+size_flags_stretch_ratio = 2.5
+text = "Outer Ring"
+fit_content_height = true
+scroll_active = false
+
+[node name="Ring3Left" type="Button" parent="GameplayUI/LeftBar/MarginContainer/Content/Buttons/RingSpeed"]
+margin_top = 158.0
+margin_right = 614.0
+margin_bottom = 191.0
+focus_mode = 0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+enabled_focus_mode = 0
+icon = ExtResource( 24 )
+expand_icon = true
+
+[node name="BuildMenu" type="VBoxContainer" parent="GameplayUI/LeftBar/MarginContainer/Content/Buttons"]
+visible = false
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_right = -574.0
+margin_bottom = -151.0
+
+[node name="Button" type="Button" parent="GameplayUI/LeftBar/MarginContainer/Content/Buttons/BuildMenu"]
+margin_right = 102.0
+margin_bottom = 102.0
+icon = ExtResource( 26 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
@@ -222,8 +386,57 @@ physics_object_picking = true
 [node name="Core" type="StaticBody" parent="GameplayUI/Center/ViewportContainer/Viewport"]
 transform = Transform( 1.5, 0, 0, 0, 1.5, 0, 0, 0, 1.5, 0, 0, 0 )
 
+[node name="Viewport" type="Viewport" parent="GameplayUI/Center/ViewportContainer/Viewport/Core"]
+size = Vector2( 128, 128 )
+transparent_bg = true
+render_target_v_flip = true
+
+[node name="NinePatchRect" type="NinePatchRect" parent="GameplayUI/Center/ViewportContainer/Viewport/Core/Viewport"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+texture = ExtResource( 4 )
+patch_margin_left = 10
+patch_margin_top = 10
+patch_margin_right = 10
+patch_margin_bottom = 10
+
+[node name="Healthbox" type="HBoxContainer" parent="GameplayUI/Center/ViewportContainer/Viewport/Core/Viewport"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+size_flags_vertical = 8
+theme = ExtResource( 6 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Label" type="RichTextLabel" parent="GameplayUI/Center/ViewportContainer/Viewport/Core/Viewport/Healthbox"]
+margin_right = 91.0
+margin_bottom = 128.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+text = "Health"
+fit_content_height = true
+scroll_active = false
+
+[node name="Value" type="RichTextLabel" parent="GameplayUI/Center/ViewportContainer/Viewport/Core/Viewport/Healthbox"]
+margin_left = 95.0
+margin_right = 128.0
+margin_bottom = 128.0
+size_flags_horizontal = 3
+size_flags_stretch_ratio = 0.35
+bbcode_enabled = true
+bbcode_text = "[right]10[/right]"
+text = "10"
+fit_content_height = true
+scroll_active = false
+
+[node name="MeshInstance3" type="MeshInstance" parent="GameplayUI/Center/ViewportContainer/Viewport/Core"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.1727, 0 )
+mesh = SubResource( 10 )
+material/0 = SubResource( 12 )
+
 [node name="CollisionShape" type="CollisionShape" parent="GameplayUI/Center/ViewportContainer/Viewport/Core"]
-shape = SubResource( 2 )
+shape = SubResource( 3 )
 
 [node name="MeshInstance" type="MeshInstance" parent="GameplayUI/Center/ViewportContainer/Viewport/Core"]
 mesh = ExtResource( 7 )
@@ -377,7 +590,7 @@ start_speed = 3
 
 [node name="CollisionShape" type="CollisionShape" parent="GameplayUI/Center/ViewportContainer/Viewport/Ring1"]
 visible = false
-shape = SubResource( 3 )
+shape = SubResource( 4 )
 
 [node name="Turret" type="KinematicBody" parent="GameplayUI/Center/ViewportContainer/Viewport/Ring1"]
 
@@ -462,7 +675,7 @@ ring_id = 2
 
 [node name="CollisionShape" type="CollisionShape" parent="GameplayUI/Center/ViewportContainer/Viewport/Ring2"]
 visible = false
-shape = SubResource( 3 )
+shape = SubResource( 4 )
 
 [node name="Segments" type="Spatial" parent="GameplayUI/Center/ViewportContainer/Viewport/Ring2"]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0.0108523, -0.00862694, -3.86238e-05 )
@@ -561,7 +774,7 @@ start_speed = 5
 
 [node name="CollisionShape" type="CollisionShape" parent="GameplayUI/Center/ViewportContainer/Viewport/Ring3"]
 visible = false
-shape = SubResource( 3 )
+shape = SubResource( 4 )
 
 [node name="Segments" type="Spatial" parent="GameplayUI/Center/ViewportContainer/Viewport/Ring3"]
 __meta__ = {
@@ -677,7 +890,7 @@ fov = 120.0
 size = 11.88
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="GameplayUI/Center/ViewportContainer/Viewport/Camera"]
-"anims/camera pan" = SubResource( 4 )
+"anims/camera pan" = SubResource( 5 )
 
 [node name="BakedLightmap" type="BakedLightmap" parent="GameplayUI/Center/ViewportContainer/Viewport"]
 extents = Vector3( 25, 19, 20 )
@@ -686,7 +899,7 @@ extents = Vector3( 25, 19, 20 )
 transform = Transform( 1, 0, 0, 0, 0.707107, 0.707107, 0, -0.707107, 0.707107, 0, 6, 16 )
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="GameplayUI/Center/ViewportContainer/Viewport"]
-environment = SubResource( 5 )
+environment = SubResource( 6 )
 
 [node name="Laserbeam" parent="GameplayUI/Center/ViewportContainer/Viewport" instance=ExtResource( 2 )]
 
@@ -695,40 +908,17 @@ visible = false
 modulate = Color( 1, 0, 0, 1 )
 texture = ExtResource( 25 )
 
-[node name="NinePatchRect" type="NinePatchRect" parent="GameplayUI/Center/ViewportContainer"]
-visible = false
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-margin_left = -50.0
-margin_top = -50.0
-margin_right = 50.0
-margin_bottom = 50.0
-texture = ExtResource( 4 )
-patch_margin_left = 10
-patch_margin_top = 10
-patch_margin_right = 10
-patch_margin_bottom = 10
-
-[node name="Button" type="Button" parent="GameplayUI/Center/ViewportContainer/NinePatchRect"]
-anchor_left = 0.1
-anchor_top = 0.1
-anchor_right = 0.9
-anchor_bottom = 0.9
-margin_left = 0.0157471
-margin_top = -0.809448
-margin_right = 24.0157
-margin_bottom = 19.1906
-rect_scale = Vector2( 0.767, 0.798 )
-icon = ExtResource( 26 )
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="RightBar" type="NinePatchRect" parent="GameplayUI"]
+[node name="RightBar" type="PanelContainer" parent="GameplayUI"]
 margin_left = 2063.0
 margin_right = 2688.0
+margin_bottom = 1060.0
+rect_min_size = Vector2( 156, 0 )
+size_flags_horizontal = 3
+size_flags_vertical = 3
+custom_styles/panel = SubResource( 1 )
+
+[node name="GUIBackdrop" type="NinePatchRect" parent="GameplayUI/RightBar"]
+margin_right = 625.0
 margin_bottom = 1060.0
 rect_min_size = Vector2( 156, 0 )
 size_flags_horizontal = 3
@@ -740,22 +930,168 @@ patch_margin_left = 11
 patch_margin_top = 11
 patch_margin_right = 11
 patch_margin_bottom = 11
-script = ExtResource( 27 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="VBoxContainer2" type="VBoxContainer" parent="GameplayUI/RightBar"]
-anchor_left = 0.1
-anchor_top = 0.05
-anchor_right = 0.95
-anchor_bottom = 0.95
+[node name="MarginContainer" type="MarginContainer" parent="GameplayUI/RightBar"]
+margin_right = 625.0
+margin_bottom = 1060.0
+custom_constants/margin_right = 10
+custom_constants/margin_top = 10
+custom_constants/margin_left = 10
+custom_constants/margin_bottom = 10
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="RichTextLabel" type="RichTextLabel" parent="GameplayUI/RightBar/VBoxContainer2"]
-margin_right = 531.0
+[node name="Content" type="VBoxContainer" parent="GameplayUI/RightBar/MarginContainer"]
+margin_left = 10.0
+margin_top = 10.0
+margin_right = 615.0
+margin_bottom = 1050.0
+
+[node name="Timebox" type="HBoxContainer" parent="GameplayUI/RightBar/MarginContainer/Content"]
+margin_right = 605.0
+margin_bottom = 24.0
+size_flags_vertical = 8
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Label" type="RichTextLabel" parent="GameplayUI/RightBar/MarginContainer/Content/Timebox"]
+margin_right = 353.0
+margin_bottom = 24.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+text = "Time"
+fit_content_height = true
+scroll_active = false
+
+[node name="Value" type="RichTextLabel" parent="GameplayUI/RightBar/MarginContainer/Content/Timebox"]
+margin_left = 357.0
+margin_right = 605.0
+margin_bottom = 24.0
+size_flags_horizontal = 3
+size_flags_stretch_ratio = 0.7
+bbcode_enabled = true
+bbcode_text = "[right]0[/right]"
+text = "0"
+fit_content_height = true
+scroll_active = false
+
+[node name="TabContainer" type="TabContainer" parent="GameplayUI/RightBar/MarginContainer/Content"]
+margin_top = 28.0
+margin_right = 605.0
+margin_bottom = 154.0
+custom_styles/panel = SubResource( 9 )
+custom_constants/side_margin = 100
+tabs_visible = false
+
+[node name="RingSpeed" type="VBoxContainer" parent="GameplayUI/RightBar/MarginContainer/Content/TabContainer"]
+visible = false
+anchor_right = 1.0
+anchor_bottom = 1.0
+
+[node name="RichTextLabel" type="RichTextLabel" parent="GameplayUI/RightBar/MarginContainer/Content/TabContainer/RingSpeed"]
+margin_right = 605.0
+margin_bottom = 24.0
+size_flags_horizontal = 3
+size_flags_stretch_ratio = 2.5
+text = "Inner Ring"
+fit_content_height = true
+scroll_active = false
+
+[node name="Ring1Right" type="Button" parent="GameplayUI/RightBar/MarginContainer/Content/TabContainer/RingSpeed"]
+margin_top = 28.0
+margin_right = 605.0
+margin_bottom = 61.0
+grow_horizontal = 2
+grow_vertical = 2
+focus_mode = 0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+enabled_focus_mode = 0
+icon = ExtResource( 3 )
+expand_icon = true
+
+[node name="RichTextLabel3" type="RichTextLabel" parent="GameplayUI/RightBar/MarginContainer/Content/TabContainer/RingSpeed"]
+margin_top = 65.0
+margin_right = 605.0
+margin_bottom = 89.0
+size_flags_horizontal = 3
+size_flags_stretch_ratio = 2.5
+text = "Middle Ring"
+fit_content_height = true
+scroll_active = false
+
+[node name="Ring2Right" type="Button" parent="GameplayUI/RightBar/MarginContainer/Content/TabContainer/RingSpeed"]
+margin_top = 93.0
+margin_right = 605.0
+margin_bottom = 126.0
+grow_horizontal = 2
+grow_vertical = 2
+focus_mode = 0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+enabled_focus_mode = 0
+icon = ExtResource( 3 )
+expand_icon = true
+
+[node name="RichTextLabel4" type="RichTextLabel" parent="GameplayUI/RightBar/MarginContainer/Content/TabContainer/RingSpeed"]
+margin_top = 130.0
+margin_right = 605.0
+margin_bottom = 154.0
+size_flags_horizontal = 3
+size_flags_stretch_ratio = 2.5
+text = "Outer Ring"
+fit_content_height = true
+scroll_active = false
+
+[node name="Ring3Right" type="Button" parent="GameplayUI/RightBar/MarginContainer/Content/TabContainer/RingSpeed"]
+margin_top = 158.0
+margin_right = 605.0
+margin_bottom = 191.0
+grow_horizontal = 2
+grow_vertical = 2
+focus_mode = 0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+enabled_focus_mode = 0
+icon = ExtResource( 3 )
+expand_icon = true
+
+[node name="Pause" type="Button" parent="GameplayUI/RightBar/MarginContainer/Content/TabContainer/RingSpeed"]
+pause_mode = 2
+margin_top = 195.0
+margin_right = 605.0
+margin_bottom = 228.0
+disabled = true
+toggle_mode = true
+enabled_focus_mode = 0
+text = "Pause"
+script = ExtResource( 28 )
+
+[node name="Exit" type="Button" parent="GameplayUI/RightBar/MarginContainer/Content/TabContainer/RingSpeed"]
+pause_mode = 2
+margin_top = 232.0
+margin_right = 605.0
+margin_bottom = 265.0
+focus_mode = 0
+enabled_focus_mode = 0
+text = "Exit"
+
+[node name="BuildMenu" type="VBoxContainer" parent="GameplayUI/RightBar/MarginContainer/Content/TabContainer"]
+visible = false
+anchor_right = 1.0
+anchor_bottom = 1.0
+
+[node name="MainMenu" type="VBoxContainer" parent="GameplayUI/RightBar/MarginContainer/Content/TabContainer"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+
+[node name="RichTextLabel2" type="RichTextLabel" parent="GameplayUI/RightBar/MarginContainer/Content/TabContainer/MainMenu"]
+margin_right = 605.0
 margin_bottom = 48.0
 rect_clip_content = false
 size_flags_horizontal = 3
@@ -768,7 +1104,7 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="NinePatchRect" type="NinePatchRect" parent="GameplayUI/RightBar/VBoxContainer2/RichTextLabel"]
+[node name="NinePatchRect" type="NinePatchRect" parent="GameplayUI/RightBar/MarginContainer/Content/TabContainer/MainMenu/RichTextLabel2"]
 modulate = Color( 0.223529, 0.223529, 0.223529, 1 )
 show_behind_parent = true
 anchor_left = -0.01
@@ -786,39 +1122,23 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="AnimationPlayer" type="AnimationPlayer" parent="GameplayUI/RightBar/VBoxContainer2/RichTextLabel"]
+[node name="AnimationPlayer" type="AnimationPlayer" parent="GameplayUI/RightBar/MarginContainer/Content/TabContainer/MainMenu/RichTextLabel2"]
 autoplay = "thing"
-anims/thing = SubResource( 6 )
+anims/thing = SubResource( 7 )
 
-[node name="TabContainer" type="TabContainer" parent="GameplayUI/RightBar/VBoxContainer2"]
+[node name="Start" type="Button" parent="GameplayUI/RightBar/MarginContainer/Content/TabContainer/MainMenu"]
+pause_mode = 2
 margin_top = 52.0
-margin_right = 531.0
-margin_bottom = 954.0
-size_flags_vertical = 3
-tab_align = 0
-tabs_visible = false
-__meta__ = {
-"_edit_use_anchors_": false
-}
+margin_right = 605.0
+margin_bottom = 85.0
+focus_mode = 0
+enabled_focus_mode = 0
+text = "Start"
 
-[node name="Instructions" type="Tabs" parent="GameplayUI/RightBar/VBoxContainer2/TabContainer"]
-anchor_right = 1.0
-anchor_bottom = 1.0
-margin_left = 10.0
-margin_top = 10.0
-margin_right = -10.0
-margin_bottom = -10.0
-
-[node name="VBoxContainer" type="VBoxContainer" parent="GameplayUI/RightBar/VBoxContainer2/TabContainer/Instructions"]
-anchor_right = 1.0
-anchor_bottom = 1.0
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="Label2" type="RichTextLabel" parent="GameplayUI/RightBar/VBoxContainer2/TabContainer/Instructions/VBoxContainer"]
-margin_right = 511.0
-margin_bottom = 845.0
+[node name="Label2" type="RichTextLabel" parent="GameplayUI/RightBar/MarginContainer/Content/TabContainer/MainMenu"]
+margin_top = 89.0
+margin_right = 605.0
+margin_bottom = 89.0
 size_flags_vertical = 3
 text = "Instructions:
 
@@ -854,329 +1174,11 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="Game" type="Button" parent="GameplayUI/RightBar/VBoxContainer2/TabContainer/Instructions/VBoxContainer"]
-margin_top = 849.0
-margin_right = 511.0
-margin_bottom = 882.0
-text = "Game"
-
-[node name="Buttons" type="Tabs" parent="GameplayUI/RightBar/VBoxContainer2/TabContainer"]
-visible = false
-anchor_right = 1.0
-anchor_bottom = 1.0
-margin_left = 10.0
-margin_top = 10.0
-margin_right = -10.0
-margin_bottom = -10.0
-
-[node name="VBoxContainer" type="VBoxContainer" parent="GameplayUI/RightBar/VBoxContainer2/TabContainer/Buttons"]
-anchor_right = 1.0
-anchor_bottom = 1.0
-size_flags_horizontal = 3
-size_flags_vertical = 3
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="Healthbox" type="HBoxContainer" parent="GameplayUI/RightBar/VBoxContainer2/TabContainer/Buttons/VBoxContainer"]
-margin_right = 388.0
-margin_bottom = 24.0
-size_flags_vertical = 8
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="Label" type="RichTextLabel" parent="GameplayUI/RightBar/VBoxContainer2/TabContainer/Buttons/VBoxContainer/Healthbox"]
-margin_right = 284.0
-margin_bottom = 24.0
-size_flags_horizontal = 3
-size_flags_vertical = 3
-text = "Health"
-fit_content_height = true
-scroll_active = false
-
-[node name="Value" type="RichTextLabel" parent="GameplayUI/RightBar/VBoxContainer2/TabContainer/Buttons/VBoxContainer/Healthbox"]
-margin_left = 288.0
-margin_right = 388.0
-margin_bottom = 24.0
-size_flags_horizontal = 3
-size_flags_stretch_ratio = 0.35
-bbcode_enabled = true
-bbcode_text = "[right]10[/right]"
-text = "10"
-fit_content_height = true
-scroll_active = false
-
-[node name="Creditbox" type="HBoxContainer" parent="GameplayUI/RightBar/VBoxContainer2/TabContainer/Buttons/VBoxContainer"]
-margin_top = 28.0
-margin_right = 388.0
-margin_bottom = 52.0
-size_flags_vertical = 8
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="Label" type="RichTextLabel" parent="GameplayUI/RightBar/VBoxContainer2/TabContainer/Buttons/VBoxContainer/Creditbox"]
-margin_right = 284.0
-margin_bottom = 24.0
-size_flags_horizontal = 3
-size_flags_vertical = 3
-text = "Credits"
-fit_content_height = true
-scroll_active = false
-
-[node name="Value" type="RichTextLabel" parent="GameplayUI/RightBar/VBoxContainer2/TabContainer/Buttons/VBoxContainer/Creditbox"]
-margin_left = 288.0
-margin_right = 388.0
-margin_bottom = 24.0
-size_flags_horizontal = 3
-size_flags_stretch_ratio = 0.35
-bbcode_enabled = true
-bbcode_text = "[right]5$[/right]"
-text = "5$"
-fit_content_height = true
-scroll_active = false
-
-[node name="HSeparator" type="HSeparator" parent="GameplayUI/RightBar/VBoxContainer2/TabContainer/Buttons/VBoxContainer"]
-self_modulate = Color( 0, 0, 0, 1 )
-margin_top = 56.0
-margin_right = 388.0
-margin_bottom = 60.0
-
-[node name="Timebox" type="HBoxContainer" parent="GameplayUI/RightBar/VBoxContainer2/TabContainer/Buttons/VBoxContainer"]
-margin_top = 64.0
-margin_right = 388.0
-margin_bottom = 88.0
-size_flags_vertical = 8
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="Label" type="RichTextLabel" parent="GameplayUI/RightBar/VBoxContainer2/TabContainer/Buttons/VBoxContainer/Timebox"]
-margin_right = 225.0
-margin_bottom = 24.0
-size_flags_horizontal = 3
-size_flags_vertical = 3
-text = "Time"
-fit_content_height = true
-scroll_active = false
-
-[node name="Value" type="RichTextLabel" parent="GameplayUI/RightBar/VBoxContainer2/TabContainer/Buttons/VBoxContainer/Timebox"]
-margin_left = 229.0
-margin_right = 388.0
-margin_bottom = 24.0
-size_flags_horizontal = 3
-size_flags_stretch_ratio = 0.7
-bbcode_enabled = true
-bbcode_text = "[right]0[/right]"
-text = "0"
-fit_content_height = true
-scroll_active = false
-
-[node name="HSeparator4" type="HSeparator" parent="GameplayUI/RightBar/VBoxContainer2/TabContainer/Buttons/VBoxContainer"]
-self_modulate = Color( 0, 0, 0, 1 )
-margin_top = 92.0
-margin_right = 388.0
-margin_bottom = 96.0
-
-[node name="Label" type="RichTextLabel" parent="GameplayUI/RightBar/VBoxContainer2/TabContainer/Buttons/VBoxContainer"]
-margin_top = 100.0
-margin_right = 388.0
-margin_bottom = 124.0
-text = "Ring Speed control"
-fit_content_height = true
-scroll_active = false
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="Ring1Box" type="HBoxContainer" parent="GameplayUI/RightBar/VBoxContainer2/TabContainer/Buttons/VBoxContainer"]
-margin_top = 128.0
-margin_right = 388.0
-margin_bottom = 161.0
-
-[node name="RichTextLabel" type="RichTextLabel" parent="GameplayUI/RightBar/VBoxContainer2/TabContainer/Buttons/VBoxContainer/Ring1Box"]
-margin_right = 170.0
-margin_bottom = 33.0
-size_flags_horizontal = 3
-size_flags_stretch_ratio = 2.5
-text = "Inner Ring"
-fit_content_height = true
-scroll_active = false
-
-[node name="Ring1Left" type="Button" parent="GameplayUI/RightBar/VBoxContainer2/TabContainer/Buttons/VBoxContainer/Ring1Box"]
-margin_left = 174.0
-margin_right = 243.0
-margin_bottom = 33.0
-focus_mode = 0
-size_flags_horizontal = 3
-size_flags_vertical = 3
-enabled_focus_mode = 0
-icon = ExtResource( 24 )
-expand_icon = true
-
-[node name="RichTextLabel2" type="RichTextLabel" parent="GameplayUI/RightBar/VBoxContainer2/TabContainer/Buttons/VBoxContainer/Ring1Box"]
-margin_left = 247.0
-margin_right = 315.0
-margin_bottom = 33.0
-size_flags_horizontal = 3
-bbcode_enabled = true
-bbcode_text = "[center]1[/center]"
-text = "1"
-scroll_active = false
-
-[node name="Ring1Right" type="Button" parent="GameplayUI/RightBar/VBoxContainer2/TabContainer/Buttons/VBoxContainer/Ring1Box"]
-margin_left = 319.0
-margin_right = 388.0
-margin_bottom = 33.0
-grow_horizontal = 2
-grow_vertical = 2
-focus_mode = 0
-size_flags_horizontal = 3
-size_flags_vertical = 3
-enabled_focus_mode = 0
-icon = ExtResource( 3 )
-expand_icon = true
-
-[node name="Ring2Box" type="HBoxContainer" parent="GameplayUI/RightBar/VBoxContainer2/TabContainer/Buttons/VBoxContainer"]
-margin_top = 165.0
-margin_right = 388.0
-margin_bottom = 198.0
-
-[node name="RichTextLabel" type="RichTextLabel" parent="GameplayUI/RightBar/VBoxContainer2/TabContainer/Buttons/VBoxContainer/Ring2Box"]
-margin_right = 170.0
-margin_bottom = 33.0
-size_flags_horizontal = 3
-size_flags_stretch_ratio = 2.5
-text = "Middle Ring"
-fit_content_height = true
-scroll_active = false
-
-[node name="Ring2Left" type="Button" parent="GameplayUI/RightBar/VBoxContainer2/TabContainer/Buttons/VBoxContainer/Ring2Box"]
-margin_left = 174.0
-margin_right = 243.0
-margin_bottom = 33.0
-focus_mode = 0
-size_flags_horizontal = 3
-size_flags_vertical = 3
-enabled_focus_mode = 0
-icon = ExtResource( 24 )
-expand_icon = true
-
-[node name="RichTextLabel2" type="RichTextLabel" parent="GameplayUI/RightBar/VBoxContainer2/TabContainer/Buttons/VBoxContainer/Ring2Box"]
-margin_left = 247.0
-margin_right = 315.0
-margin_bottom = 33.0
-size_flags_horizontal = 3
-bbcode_enabled = true
-bbcode_text = "[center]1[/center]"
-text = "1"
-scroll_active = false
-
-[node name="Ring2Right" type="Button" parent="GameplayUI/RightBar/VBoxContainer2/TabContainer/Buttons/VBoxContainer/Ring2Box"]
-margin_left = 319.0
-margin_right = 388.0
-margin_bottom = 33.0
-grow_horizontal = 2
-grow_vertical = 2
-focus_mode = 0
-size_flags_horizontal = 3
-size_flags_vertical = 3
-enabled_focus_mode = 0
-icon = ExtResource( 3 )
-expand_icon = true
-
-[node name="Ring3Box" type="HBoxContainer" parent="GameplayUI/RightBar/VBoxContainer2/TabContainer/Buttons/VBoxContainer"]
-margin_top = 202.0
-margin_right = 388.0
-margin_bottom = 235.0
-
-[node name="RichTextLabel" type="RichTextLabel" parent="GameplayUI/RightBar/VBoxContainer2/TabContainer/Buttons/VBoxContainer/Ring3Box"]
-margin_right = 170.0
-margin_bottom = 33.0
-size_flags_horizontal = 3
-size_flags_stretch_ratio = 2.5
-text = "Outer Ring"
-fit_content_height = true
-scroll_active = false
-
-[node name="Ring3Left" type="Button" parent="GameplayUI/RightBar/VBoxContainer2/TabContainer/Buttons/VBoxContainer/Ring3Box"]
-margin_left = 174.0
-margin_right = 243.0
-margin_bottom = 33.0
-focus_mode = 0
-size_flags_horizontal = 3
-size_flags_vertical = 3
-enabled_focus_mode = 0
-icon = ExtResource( 24 )
-expand_icon = true
-
-[node name="RichTextLabel2" type="RichTextLabel" parent="GameplayUI/RightBar/VBoxContainer2/TabContainer/Buttons/VBoxContainer/Ring3Box"]
-margin_left = 247.0
-margin_right = 315.0
-margin_bottom = 33.0
-size_flags_horizontal = 3
-bbcode_enabled = true
-bbcode_text = "[center]1[/center]"
-text = "1"
-scroll_active = false
-
-[node name="Ring3Right" type="Button" parent="GameplayUI/RightBar/VBoxContainer2/TabContainer/Buttons/VBoxContainer/Ring3Box"]
-margin_left = 319.0
-margin_right = 388.0
-margin_bottom = 33.0
-grow_horizontal = 2
-grow_vertical = 2
-focus_mode = 0
-size_flags_horizontal = 3
-size_flags_vertical = 3
-enabled_focus_mode = 0
-icon = ExtResource( 3 )
-expand_icon = true
-
-[node name="HSeparator2" type="HSeparator" parent="GameplayUI/RightBar/VBoxContainer2/TabContainer/Buttons/VBoxContainer"]
-self_modulate = Color( 0, 0, 0, 1 )
-margin_top = 239.0
-margin_right = 388.0
-margin_bottom = 243.0
-
-[node name="Instructions" type="Button" parent="GameplayUI/RightBar/VBoxContainer2/TabContainer/Buttons/VBoxContainer"]
-margin_top = 247.0
-margin_right = 388.0
-margin_bottom = 280.0
-text = "Instructions"
-
-[node name="HSeparator3" type="HSeparator" parent="GameplayUI/RightBar/VBoxContainer2/TabContainer/Buttons/VBoxContainer"]
-self_modulate = Color( 0, 0, 0, 1 )
-margin_top = 284.0
-margin_right = 388.0
-margin_bottom = 288.0
-
-[node name="Pause" type="Button" parent="GameplayUI/RightBar/VBoxContainer2/TabContainer/Buttons/VBoxContainer"]
+[node name="Exit" type="Button" parent="GameplayUI/RightBar/MarginContainer/Content/TabContainer/MainMenu"]
 pause_mode = 2
-margin_top = 292.0
-margin_right = 388.0
-margin_bottom = 325.0
-disabled = true
-toggle_mode = true
-enabled_focus_mode = 0
-text = "Pause"
-script = ExtResource( 28 )
-
-[node name="Start" type="Button" parent="GameplayUI/RightBar/VBoxContainer2/TabContainer/Buttons/VBoxContainer"]
-pause_mode = 2
-margin_top = 329.0
-margin_right = 388.0
-margin_bottom = 362.0
-focus_mode = 0
-enabled_focus_mode = 0
-text = "Start"
-
-[node name="Exit" type="Button" parent="GameplayUI/RightBar/VBoxContainer2/TabContainer/Buttons/VBoxContainer"]
-pause_mode = 2
-margin_top = 366.0
-margin_right = 388.0
-margin_bottom = 399.0
+margin_top = 93.0
+margin_right = 605.0
+margin_bottom = 126.0
 focus_mode = 0
 enabled_focus_mode = 0
 text = "Exit"
@@ -1192,7 +1194,7 @@ volume_db = -15.0
 stream_paused = true
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
-anims/fadetogame = SubResource( 7 )
+anims/fadetogame = SubResource( 8 )
 
 [node name="Laser1" type="AudioStreamPlayer" parent="."]
 stream = ExtResource( 32 )
@@ -1212,15 +1214,8 @@ volume_db = -30.0
 
 [node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
 
-[connection signal="pressed" from="GameplayUI/Center/ViewportContainer/NinePatchRect/Button" to="GameplayUI/Center/ViewportContainer" method="_on_Button_pressed"]
-[connection signal="pressed" from="GameplayUI/RightBar/VBoxContainer2/TabContainer/Instructions/VBoxContainer/Game" to="GameplayUI/RightBar" method="_on_Game_pressed"]
-[connection signal="pressed" from="GameplayUI/RightBar/VBoxContainer2/TabContainer/Buttons/VBoxContainer/Ring1Box/Ring1Left" to="GameplayUI/RightBar" method="_on_Ring1Left_pressed"]
-[connection signal="pressed" from="GameplayUI/RightBar/VBoxContainer2/TabContainer/Buttons/VBoxContainer/Ring1Box/Ring1Right" to="GameplayUI/RightBar" method="_on_Ring1Right_pressed"]
-[connection signal="pressed" from="GameplayUI/RightBar/VBoxContainer2/TabContainer/Buttons/VBoxContainer/Ring2Box/Ring2Left" to="GameplayUI/RightBar" method="_on_Ring2Left_pressed"]
-[connection signal="pressed" from="GameplayUI/RightBar/VBoxContainer2/TabContainer/Buttons/VBoxContainer/Ring2Box/Ring2Right" to="GameplayUI/RightBar" method="_on_Ring2Right_pressed"]
-[connection signal="pressed" from="GameplayUI/RightBar/VBoxContainer2/TabContainer/Buttons/VBoxContainer/Ring3Box/Ring3Left" to="GameplayUI/RightBar" method="_on_Ring3Left_pressed"]
-[connection signal="pressed" from="GameplayUI/RightBar/VBoxContainer2/TabContainer/Buttons/VBoxContainer/Ring3Box/Ring3Right" to="GameplayUI/RightBar" method="_on_Ring3Right_pressed"]
-[connection signal="pressed" from="GameplayUI/RightBar/VBoxContainer2/TabContainer/Buttons/VBoxContainer/Instructions" to="GameplayUI/RightBar" method="_on_Instructions_pressed"]
-[connection signal="toggled" from="GameplayUI/RightBar/VBoxContainer2/TabContainer/Buttons/VBoxContainer/Pause" to="GameplayUI/RightBar/VBoxContainer2/TabContainer/Buttons/VBoxContainer/Pause" method="_on_Pause_toggled"]
-[connection signal="pressed" from="GameplayUI/RightBar/VBoxContainer2/TabContainer/Buttons/VBoxContainer/Start" to="." method="_on_Start_pressed"]
-[connection signal="pressed" from="GameplayUI/RightBar/VBoxContainer2/TabContainer/Buttons/VBoxContainer/Exit" to="." method="_on_Exit_pressed"]
+[connection signal="pressed" from="GameplayUI/LeftBar/MarginContainer/Content/Buttons/BuildMenu/Button" to="GameplayUI/Center/ViewportContainer" method="_on_Button_pressed"]
+[connection signal="toggled" from="GameplayUI/RightBar/MarginContainer/Content/TabContainer/RingSpeed/Pause" to="GameplayUI/RightBar/MarginContainer/Content/TabContainer/RingSpeed/Pause" method="_on_Pause_toggled"]
+[connection signal="pressed" from="GameplayUI/RightBar/MarginContainer/Content/TabContainer/RingSpeed/Exit" to="." method="_on_Exit_pressed"]
+[connection signal="pressed" from="GameplayUI/RightBar/MarginContainer/Content/TabContainer/MainMenu/Start" to="." method="_on_Start_pressed"]
+[connection signal="pressed" from="GameplayUI/RightBar/MarginContainer/Content/TabContainer/MainMenu/Exit" to="." method="_on_Exit_pressed"]

@@ -31,7 +31,7 @@ func set_health (newHealth) -> void:
 		end_game()
 	elif newHealth > 0:
 		health = newHealth
-	$GameplayUI/RightBar/VBoxContainer2/TabContainer/Buttons/VBoxContainer/Healthbox/Value.bbcode_text = "[right]" + str(newHealth) + "[/right]"
+	#$GameplayUI/RightBar/VBoxContainer2/TabContainer/Buttons/VBoxContainer/Healthbox/Value.bbcode_text = "[right]" + str(newHealth) + "[/right]"
 	
 func change_health(delta) -> void:
 	set_health(health + delta)

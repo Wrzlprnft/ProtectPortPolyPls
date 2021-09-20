@@ -12,7 +12,7 @@ func _ready():
 	Events.connect("speed2_changed",self,"speed2_changed")
 	Events.connect("speed3_changed",self,"speed3_changed")
 	Events.connect("update_time",self,"update_time")
-	Events.connect("game_started",self,"start_game")
+	#Events.connect("game_started",self,"start_game")
 	Events.connect("game_ended",self,"end_game")
 	Events.connect("currency_changed",self,"update_currency")
 
